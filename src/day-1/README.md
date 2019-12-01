@@ -22,3 +22,11 @@ The calculation itself was pretty simple. Only catch was rounding out the divisi
 
 Next is to iterate through the file (using a utility I already created for parsing lines of a file), converting it to an number,
 and adding it to a running total. I'll so this part in the `executeFirstHalf` function itself.
+
+## Part 2
+
+Okay, so we've added a bit of recursiveness to the whole thing. I'm going to go ahead and implement a newer function that will use the older function recursively.
+
+## Unit Tests
+
+First, is the tests. The tests themselves should look very similar to the part 1 tests, in that we'll give a number and expect a result.
