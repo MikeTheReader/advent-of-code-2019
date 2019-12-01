@@ -2,6 +2,8 @@
 
 This repository is for housing my solutions to the 2019 Advent of Code (https://adventofcode.com/2019).
 
+WARNING: There are spoilers in here for the problems. I will be pushing up my solutions as I solve them, and while I'm not racing for the leaderboard, I may have them up before other folks.
+
 ## Language Choice
 
 This year, I will be using TypeScript as my language to solve the problems.
