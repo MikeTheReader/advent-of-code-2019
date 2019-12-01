@@ -36,3 +36,5 @@ First, is the tests. The tests themselves should look very similar to the part 1
 Pretty straightfoward to call the original method recursively. Only thing I originally don't like about it is calling the original method twice. May try refactoring that.
 
 Yes, changing from a do..while to a while loop and calculating initial value first, kept me from having to call the method twice. I like that a bit better.
+
+The solution `executeSecondHalf` method looked very similar to the first half implementation, just changing out the call to use the recursive function.
