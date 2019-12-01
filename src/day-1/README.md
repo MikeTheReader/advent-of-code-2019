@@ -30,3 +30,9 @@ Okay, so we've added a bit of recursiveness to the whole thing. I'm going to go 
 ## Unit Tests
 
 First, is the tests. The tests themselves should look very similar to the part 1 tests, in that we'll give a number and expect a result.
+
+## Implementation
+
+Pretty straightfoward to call the original method recursively. Only thing I originally don't like about it is calling the original method twice. May try refactoring that.
+
+Yes, changing from a do..while to a while loop and calculating initial value first, kept me from having to call the method twice. I like that a bit better.
