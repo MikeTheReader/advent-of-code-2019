@@ -1,3 +1,3 @@
 export function calculateFuelCost(mass: number): number {
-  return 0;
+  return Math.floor(mass / 3) - 2;
 }

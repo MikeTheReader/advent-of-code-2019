@@ -15,3 +15,10 @@ So, first bit is to create a function for handling the calculation given a numbe
 ### Unit Tests
 
 First thing is to create unit tests based on the example equations and results.
+
+### Implementation
+
+The calculation itself was pretty simple. Only catch was rounding out the division results so you didn't end up with a decimal number.
+
+Next is to iterate through the file (using a utility I already created for parsing lines of a file), converting it to an number,
+and adding it to a running total. I'll so this part in the `executeFirstHalf` function itself.
