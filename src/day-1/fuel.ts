@@ -3,5 +3,11 @@ export function calculateFuelCost(mass: number): number {
 }
 
 export function calculateRecursiveFuelCost(mass: number): number {
-  return 0;
+  let total = 0;
+  let addedMass = mass;
+  do {
+    addedMass = calculateFuelCost(addedMass);
+    total += addedMass;
+  } while (calculateFuelCost(addedMass) > 0);
+  return total;
 }
