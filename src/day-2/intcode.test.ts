@@ -1,4 +1,4 @@
-import { runProgram } from "./intcode";
+import { findMatchingInput, runProgram } from "./intcode";
 
 describe("intcode", () => {
   describe("runProgram", () => {
@@ -35,6 +35,13 @@ describe("intcode", () => {
         0,
         99
       ]);
+    });
+  });
+
+  describe("findMatchingInput", () => {
+    it("no good examples, so these are based on working backwards", () => {
+      const program = [1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50];
+      expect(findMatchingInput(1600, program)).toEqual({ noun: 4, verb: 9 });
     });
   });
 });
