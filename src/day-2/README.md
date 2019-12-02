@@ -10,6 +10,10 @@ Initially, it feels like a natural fit to read the whole list into an array. The
 
 Time to write unit tests. Again, we have a nice set of data to test against, so we'll use that to write the tests.
 
-## Implementation
+## Implementation - First Half
 
 Okay, so made initial implementation and it worked for all but the last test case. I wasn't clear that in-progress modifications to the values could cause the program to change. I initally put in a copy of the array to prevent that.
+
+## Implementation - Second Half
+
+This reuses the same logic, just hammering it iteratively. Should be able to just implement the solution without additional lower-level functions.
