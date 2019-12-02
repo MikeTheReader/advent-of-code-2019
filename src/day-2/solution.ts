@@ -1,14 +1,13 @@
 import Solution from "../solution-base";
-import FileReader from "../utils/file-reader";
+import { processFile } from "../utils/file-reader";
 import { runProgram } from "./intcode";
 
 export default class DayTwoSolution extends Solution {
   public async executeFirstHalf() {
     let program: number[];
-    const reader = new FileReader(line => {
+    await processFile(this.file, line => {
       program = line.split(",").map(x => +x);
     });
-    await reader.processFile(this.file);
     program[1] = 12;
     program[2] = 2;
     const results = runProgram(program);
@@ -18,10 +17,9 @@ export default class DayTwoSolution extends Solution {
   public async executeSecondHalf() {
     const goalResult = 19690720;
     let program: number[];
-    const reader = new FileReader(line => {
+    await processFile(this.file, line => {
       program = line.split(",").map(x => +x);
     });
-    await reader.processFile(this.file);
     let noun = 0;
     let verb = 0;
     let completed = false;
