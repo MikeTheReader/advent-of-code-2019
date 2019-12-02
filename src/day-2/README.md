@@ -17,3 +17,7 @@ Okay, so made initial implementation and it worked for all but the last test cas
 ## Implementation - Second Half
 
 This reuses the same logic, just hammering it iteratively. Should be able to just implement the solution without additional lower-level functions.
+
+## Refactor
+
+Refactored a bit here to make the file reading utility a bit more lightweight from the usage standpoint. Also modified to pull out the logic from `executeSecondHalf` to be a fully tested function within `intcode.ts`. Didn't have great examples for part 2 expected results so created those tests a bit backwards from the results.
