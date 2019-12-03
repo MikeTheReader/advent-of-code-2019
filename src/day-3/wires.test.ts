@@ -71,11 +71,11 @@ describe("wires", () => {
           grid.addWire("U98,R91,D20,R16,D67,R40,U7,R15,U6,R7");
           expect(grid.getLeastSteps()).toEqual(410);
         });
-        it("actual run failed - found this test online", () => {
+        it("gets expected results even with an earlier self-intersection", () => {
           const grid = new Grid();
-          grid.addWire("U5,R2,D3");
-          grid.addWire("R5,U2,L5");
-          expect(grid.getLeastSteps()).toEqual(14);
+          grid.addWire("L1,U4,R2,D2,L1,U1,R3,D2");
+          grid.addWire("R5,U2,L3");
+          expect(grid.getLeastSteps()).toEqual(24);
         });
       });
     });
