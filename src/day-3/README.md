@@ -30,4 +30,10 @@ Since we don't really need a visual and don't care about those entries that don'
 
 Realized the solution of incrementing a number doesn't actually help, since we can have a self-overlapping wire that we don't want to count as an intersection. Added a test for self-overlapping and implemented a fix by using Set as the value for a given x, y coordinate and then adding the wire number to it.
 
+## Second Half
 
+Second half seemed like it was going to be easy, but went through a couple of iterations. Managed to find a way of doing it that ended up cleaning up the logic for the first half.
+
+Had it working and unit tests passing, but kept getting the wrong number for the final answer.
+
+Turned out, I was only incrementing my step count when I hit an intersection. Pulled that out of there and everything was much better.
