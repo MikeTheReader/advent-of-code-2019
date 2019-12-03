@@ -8,4 +8,10 @@ export default class DayThreeSolution extends Solution {
     await processFile(this.file, line => grid.addWire(line));
     return grid.getSmallestDistance();
   }
+
+  public async executeSecondHalf() {
+    const grid = new Grid();
+    await processFile(this.file, line => grid.addWire(line));
+    return grid.getLeastSteps();
+  }
 }

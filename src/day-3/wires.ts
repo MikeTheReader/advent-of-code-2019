@@ -1,13 +1,19 @@
 export interface Coordinate {
   x: number;
   y: number;
+  steps: number;
 }
 
 export interface Column {
-  [key: string]: Set<number>;
+  [key: string]: WireStep[];
 }
 export interface Rows {
   [key: string]: Column;
+}
+
+export interface WireStep {
+  wire: number;
+  step: number;
 }
 
 const DIRECTION_MAP = {
@@ -26,6 +32,7 @@ export class Grid {
     const steps = wire.split(",");
     let currentX = 0;
     let currentY = 0;
+    let stepCount = 1;
     steps.forEach(step => {
       const direction = step.substr(0, 1);
       const distance = +step.substring(1);
@@ -38,9 +45,18 @@ export class Grid {
           this.wireGrid[currentX] = {};
         }
         if (!this.wireGrid[currentX][currentY]) {
-          this.wireGrid[currentX][currentY] = new Set();
+          this.wireGrid[currentX][currentY] = [];
         }
-        this.wireGrid[currentX][currentY].add(this.wireNumber);
+
+        const currentGridLoc = this.wireGrid[currentX][currentY];
+
+        if (!currentGridLoc.find(entry => entry.wire === this.wireNumber)) {
+          currentGridLoc.push({
+            wire: this.wireNumber,
+            step: stepCount
+          });
+        }
+        stepCount++;
       }
     });
   }
@@ -49,8 +65,9 @@ export class Grid {
     const intersections = [];
     Object.entries(this.wireGrid).forEach(([xLocation, column]) => {
       Object.entries(column).forEach(([yLocation, xValue]) => {
-        if (xValue.size > 1) {
-          intersections.push({ x: +xLocation, y: +yLocation });
+        if (xValue.length > 1) {
+          const sumSteps = xValue.map(w => w.step).reduce((a, b) => a + b);
+          intersections.push({ x: +xLocation, y: +yLocation, steps: sumSteps });
         }
       });
     });
@@ -64,5 +81,13 @@ export class Grid {
       smallestDistance = Math.min(manhattanDistance, smallestDistance);
     });
     return smallestDistance;
+  }
+
+  public getLeastSteps(): number {
+    let leastSteps = Infinity;
+    this.findIntersections().forEach(coord => {
+      leastSteps = Math.min(coord.steps, leastSteps);
+    });
+    return leastSteps;
   }
 }
