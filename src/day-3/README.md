@@ -34,6 +34,11 @@ Realized the solution of incrementing a number doesn't actually help, since we c
 
 Second half seemed like it was going to be easy, but went through a couple of iterations. Managed to find a way of doing it that ended up cleaning up the logic for the first half.
 
+Ended up:
+* Changing from using a 2d array to using an object. Seemed a bit cleaner and iterating through it was faster.
+* Moved away from the Set, since I was adding a `{ wire: 1, step: 2 }` type object in each cell. Since the step incremented each time, the Set would just keep adding the objects.
+* Realized that it was easier to "gate check" the incoming steps rather than filter all the intersections after the fact.
+
 Had it working and unit tests passing, but kept getting the wrong number for the final answer.
 
-Turned out, I was only incrementing my step count when I hit an intersection. Pulled that out of there and everything was much better.
+Turned out, I wasn't incrementing my step count if the wire went over the same point twice. The examples didn't intersect with themselves so those tests still worked. Corrected that and everything was much better.
