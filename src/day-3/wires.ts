@@ -41,14 +41,7 @@ export class Grid {
       for (let i = 0; i < Math.abs(distance); i++) {
         currentX += increment[0];
         currentY += increment[1];
-        if (!this.wireGrid[currentX]) {
-          this.wireGrid[currentX] = {};
-        }
-        if (!this.wireGrid[currentX][currentY]) {
-          this.wireGrid[currentX][currentY] = [];
-        }
-
-        const currentGridLoc = this.wireGrid[currentX][currentY];
+        const currentGridLoc = this.getLocation(currentX, currentY);
 
         if (!currentGridLoc.find(entry => entry.wire === this.wireNumber)) {
           currentGridLoc.push({
@@ -89,5 +82,15 @@ export class Grid {
       leastSteps = Math.min(coord.steps, leastSteps);
     });
     return leastSteps;
+  }
+
+  private getLocation(currentX: number, currentY: number) {
+    if (!this.wireGrid[currentX]) {
+      this.wireGrid[currentX] = {};
+    }
+    if (!this.wireGrid[currentX][currentY]) {
+      this.wireGrid[currentX][currentY] = [];
+    }
+    return this.wireGrid[currentX][currentY];
   }
 }
