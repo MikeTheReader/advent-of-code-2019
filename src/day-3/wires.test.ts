@@ -3,30 +3,41 @@ import { Grid } from "./wires";
 describe("wires", () => {
   describe("Grid", () => {
     describe("unit", () => {
-      it("adds a single direction wire correctly", () => {
-        const grid = new Grid();
-        grid.addWire("R75");
-        expect(grid.wires[75][0]).toEqual(new Set([1]));
+      describe("addWire", () => {
+        it("adds a single direction wire correctly", () => {
+          const grid = new Grid();
+          grid.addWire("R75");
+          expect(grid.wireGrid[75][0]).toEqual(new Set([1]));
+        });
+        it("adds the sample wire correctly", () => {
+          const grid = new Grid();
+          grid.addWire("R75,D30,R83,U83,L12,D49,R71,U7,L72");
+          expect(grid.wireGrid[75][0]).toEqual(new Set([1]));
+          expect(grid.wireGrid[75]["-24"]).toEqual(new Set([1]));
+          expect(grid.wireGrid[125]["-30"]).toEqual(new Set([1]));
+        });
+        it("does not add an addition entry for self-intersecting wires", () => {
+          const grid = new Grid();
+          grid.addWire("R10,U10,L5,D20");
+          expect(grid.wireGrid[5][0]).toEqual(new Set([1]));
+        });
+        it("does add a new entry for another intersecting wire", () => {
+          const grid = new Grid();
+          grid.addWire("R10,U10,L5,D20");
+          grid.addWire("U20,R7,D11");
+          expect(grid.wireGrid[7][10]).toEqual(new Set([1, 2]));
+        });
       });
-      it("adds the sample wire correctly", () => {
-        const grid = new Grid();
-        grid.addWire("R75,D30,R83,U83,L12,D49,R71,U7,L72");
-        expect(grid.wires[75][0]).toEqual(new Set([1]));
-        expect(grid.wires[75]["-24"]).toEqual(new Set([1]));
-        expect(grid.wires[125]["-30"]).toEqual(new Set([1]));
-      });
-      it("does not add an addition entry for self-intersecting wires", () => {
-        const grid = new Grid();
-        grid.addWire("R10,U10,L5,D20");
-        expect(grid.wires[5][0]).toEqual(new Set([1]));
-      });
-      it("does add a new entry for another intersecting wire", () => {
-        const grid = new Grid();
-        grid.addWire("R10,U10,L5,D20");
-        grid.addWire("U20,R7,D11");
-        expect(grid.wires[7][10]).toEqual(new Set([1, 2]));
+      describe("findIntersections", () => {
+        it.only("finds intersection", () => {
+          const grid = new Grid();
+          grid.addWire("U10,R5,D10");
+          grid.addWire("R2,U4,R7");
+          expect(grid.findIntersections()).toEqual([{ x: 5, y: 4 }]);
+        });
       });
     });
+
     describe.skip("functional", () => {
       it("expected results with given example data - 1", () => {
         const grid = new Grid();

@@ -3,6 +3,13 @@ export interface Coordinate {
   y: number;
 }
 
+export interface Column {
+  [key: string]: Set<number>;
+}
+export interface Rows {
+  [key: string]: Column;
+}
+
 const DIRECTION_MAP = {
   U: [0, 1],
   D: [0, -1],
@@ -11,7 +18,7 @@ const DIRECTION_MAP = {
 };
 
 export class Grid {
-  public wires = {};
+  public wireGrid: Rows = {};
   private wireNumber = 0;
 
   public addWire(wire: string): void {
@@ -27,19 +34,27 @@ export class Grid {
       for (let i = 0; i < Math.abs(distance); i++) {
         currentX += increment[0];
         currentY += increment[1];
-        if (!this.wires[currentX]) {
-          this.wires[currentX] = {};
+        if (!this.wireGrid[currentX]) {
+          this.wireGrid[currentX] = {};
         }
-        if (!this.wires[currentX][currentY]) {
-          this.wires[currentX][currentY] = new Set();
+        if (!this.wireGrid[currentX][currentY]) {
+          this.wireGrid[currentX][currentY] = new Set();
         }
-        this.wires[currentX][currentY].add(this.wireNumber);
+        this.wireGrid[currentX][currentY].add(this.wireNumber);
       }
     });
   }
 
   public findIntersections(): Coordinate[] {
-    return [];
+    const intersections = [];
+    Object.entries(this.wireGrid).forEach(([xLocation, column]) => {
+      Object.entries(column).forEach(([yLocation, xValue]) => {
+        if (xValue.size > 1) {
+          intersections.push({ x: +xLocation, y: +yLocation });
+        }
+      });
+    });
+    return intersections;
   }
 
   public getSmallestDistance(): number {
