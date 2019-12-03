@@ -26,3 +26,6 @@ First problem -- what is the size of the grid? Looks like we will have to size i
 
 Feels like we could use a class for the grid, since we will iteratively be adding wires to it.
 
+Since we don't really need a visual and don't care about those entries that don't have values, modified to use nested objects and the keys of those to be the x,y coordinates. Makes it easier to say grid[x][y].
+
+
