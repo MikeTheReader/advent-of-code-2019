@@ -29,7 +29,7 @@ describe("wires", () => {
         });
       });
       describe("findIntersections", () => {
-        it.only("finds intersection", () => {
+        it("finds intersection", () => {
           const grid = new Grid();
           grid.addWire("U10,R5,D10");
           grid.addWire("R2,U4,R7");
@@ -38,7 +38,7 @@ describe("wires", () => {
       });
     });
 
-    describe.skip("functional", () => {
+    describe("functional", () => {
       it("expected results with given example data - 1", () => {
         const grid = new Grid();
         grid.addWire("R75,D30,R83,U83,L12,D49,R71,U7,L72");

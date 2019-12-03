@@ -58,6 +58,11 @@ export class Grid {
   }
 
   public getSmallestDistance(): number {
-    return 0;
+    let smallestDistance = Infinity;
+    this.findIntersections().forEach(coord => {
+      const manhattanDistance = Math.abs(coord.x - 0) + Math.abs(coord.y - 0);
+      smallestDistance = Math.min(manhattanDistance, smallestDistance);
+    });
+    return smallestDistance;
   }
 }
