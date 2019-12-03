@@ -28,4 +28,6 @@ Feels like we could use a class for the grid, since we will iteratively be addin
 
 Since we don't really need a visual and don't care about those entries that don't have values, modified to use nested objects and the keys of those to be the x,y coordinates. Makes it easier to say grid[x][y].
 
+Realized the solution of incrementing a number doesn't actually help, since we can have a self-overlapping wire that we don't want to count as an intersection. Added a test for self-overlapping and implemented a fix by using Set as the value for a given x, y coordinate and then adding the wire number to it.
+
 

@@ -6,14 +6,25 @@ describe("wires", () => {
       it("adds a single direction wire correctly", () => {
         const grid = new Grid();
         grid.addWire("R75");
-        expect(grid.wires[75][0]).toEqual(1);
+        expect(grid.wires[75][0]).toEqual(new Set([1]));
       });
       it("adds the sample wire correctly", () => {
         const grid = new Grid();
         grid.addWire("R75,D30,R83,U83,L12,D49,R71,U7,L72");
-        expect(grid.wires[75][0]).toEqual(1);
-        expect(grid.wires[75]["-24"]).toEqual(1);
-        expect(grid.wires[125]["-30"]).toEqual(1);
+        expect(grid.wires[75][0]).toEqual(new Set([1]));
+        expect(grid.wires[75]["-24"]).toEqual(new Set([1]));
+        expect(grid.wires[125]["-30"]).toEqual(new Set([1]));
+      });
+      it("does not add an addition entry for self-intersecting wires", () => {
+        const grid = new Grid();
+        grid.addWire("R10,U10,L5,D20");
+        expect(grid.wires[5][0]).toEqual(new Set([1]));
+      });
+      it("does add a new entry for another intersecting wire", () => {
+        const grid = new Grid();
+        grid.addWire("R10,U10,L5,D20");
+        grid.addWire("U20,R7,D11");
+        expect(grid.wires[7][10]).toEqual(new Set([1, 2]));
       });
     });
     describe.skip("functional", () => {

@@ -1,3 +1,8 @@
+export interface Coordinate {
+  x: number;
+  y: number;
+}
+
 const DIRECTION_MAP = {
   U: [0, 1],
   D: [0, -1],
@@ -7,9 +12,10 @@ const DIRECTION_MAP = {
 
 export class Grid {
   public wires = {};
+  private wireNumber = 0;
 
   public addWire(wire: string): void {
-    // tslint:disable-next-line: no-console
+    this.wireNumber++;
     const steps = wire.split(",");
     let currentX = 0;
     let currentY = 0;
@@ -25,11 +31,15 @@ export class Grid {
           this.wires[currentX] = {};
         }
         if (!this.wires[currentX][currentY]) {
-          this.wires[currentX][currentY] = 0;
+          this.wires[currentX][currentY] = new Set();
         }
-        this.wires[currentX][currentY] += 1;
+        this.wires[currentX][currentY].add(this.wireNumber);
       }
     });
+  }
+
+  public findIntersections(): Coordinate[] {
+    return [];
   }
 
   public getSmallestDistance(): number {
