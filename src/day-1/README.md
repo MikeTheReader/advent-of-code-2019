@@ -1,8 +1,6 @@
-# Day One
+# Day One - The Tyranny of the Rocket Equation
 
 First day of Avent of Code. I've been practicing a bit using the 2018 puzzles, but definitely looking forward to some new ones.
-
-## The Tyranny of the Rocket Equation
 
 The envied position of "Fuel Counter-Upper".
 
