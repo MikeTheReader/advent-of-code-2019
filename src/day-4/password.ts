@@ -37,5 +37,20 @@ export function isValidPassword(candidate: number): boolean {
 }
 
 export function isReallyValidPassword(candidate: number): boolean {
-  return isValidPassword(candidate);
+  if (!isValidPassword(candidate)) {
+    return false;
+  }
+  const digits = candidate
+    .toString()
+    .split("")
+    .map(n => +n);
+
+  let hasDouble = false;
+  for (let i = 0; i < 10; i++) {
+    const numDigits = digits.filter(dig => dig === i);
+    if (numDigits.length === 2) {
+      hasDouble = true;
+    }
+  }
+  return hasDouble;
 }
