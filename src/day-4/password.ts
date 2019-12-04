@@ -3,15 +3,41 @@ interface PreviousValue {
 }
 
 export function isValidPassword(candidate: number): boolean {
-  const digits = candidate
+  const digits = getDigits(candidate);
+  const isRightLength = digits.length === 6;
+  const incrementingDigits = hasIncrementingDigits(digits);
+  const includesDouble = hasDoubleOrMore(digits);
+  return incrementingDigits && includesDouble && isRightLength;
+}
+
+export function isReallyValidPassword(candidate: number): boolean {
+  if (!isValidPassword(candidate)) {
+    return false;
+  }
+  return hasOnlyDouble(getDigits(candidate));
+}
+
+function getDigits(candidate: number) {
+  return candidate
     .toString()
     .split("")
     .map(n => +n);
-  if (digits.length !== 6) {
-    return false;
-  }
+}
 
-  let previous: PreviousValue = {};
+function hasDoubleOrMore(digits: number[]) {
+  const previous: PreviousValue = {};
+  let hasDouble = false;
+  digits.forEach(dig => {
+    if (previous.value && previous.value === dig) {
+      hasDouble = true;
+    }
+    previous.value = dig;
+  });
+  return hasDouble;
+}
+
+function hasIncrementingDigits(digits: number[]) {
+  const previous: PreviousValue = {};
   const incrementingDigits = digits.every(dig => {
     if (!previous.value) {
       previous.value = dig;
@@ -22,29 +48,10 @@ export function isValidPassword(candidate: number): boolean {
     previous.value = dig;
     return true;
   });
-
-  previous = {};
-  let hasDouble = false;
-  digits.forEach(dig => {
-    if (previous.value && previous.value === dig) {
-      hasDouble = true;
-    }
-
-    previous.value = dig;
-  });
-
-  return incrementingDigits && hasDouble;
+  return incrementingDigits;
 }
 
-export function isReallyValidPassword(candidate: number): boolean {
-  if (!isValidPassword(candidate)) {
-    return false;
-  }
-  const digits = candidate
-    .toString()
-    .split("")
-    .map(n => +n);
-
+function hasOnlyDouble(digits: number[]) {
   let hasDouble = false;
   for (let i = 0; i < 10; i++) {
     const numDigits = digits.filter(dig => dig === i);
