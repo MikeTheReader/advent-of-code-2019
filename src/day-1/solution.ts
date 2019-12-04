@@ -1,6 +1,6 @@
-import Solution from "../solution-base";
-import { processFile } from "../utils/file-reader";
-import { calculateFuelCost, calculateRecursiveFuelCost } from "./fuel";
+import Solution from '../solution-base';
+import { processFile } from '../utils/file-reader';
+import { calculateFuelCost, calculateRecursiveFuelCost } from './fuel';
 
 export default class DayOneSolution extends Solution {
   public async executeFirstHalf() {

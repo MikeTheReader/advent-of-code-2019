@@ -5,9 +5,7 @@ interface PreviousValue {
 export function isValidPassword(candidate: number): boolean {
   const digits = getDigits(candidate);
   const isRightLength = digits.length === 6;
-  return (
-    isRightLength && hasIncrementingDigits(digits) && hasDoubleOrMore(digits)
-  );
+  return isRightLength && hasIncrementingDigits(digits) && hasDoubleOrMore(digits);
 }
 
 export function isReallyValidPassword(candidate: number): boolean {
@@ -20,7 +18,7 @@ export function isReallyValidPassword(candidate: number): boolean {
 function getDigits(candidate: number) {
   return candidate
     .toString()
-    .split("")
+    .split('')
     .map(n => +n);
 }
 

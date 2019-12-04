@@ -1,8 +1,8 @@
-import { findMatchingInput, runProgram } from "./intcode";
+import { findMatchingInput, runProgram } from './intcode';
 
-describe("intcode", () => {
-  describe("runProgram", () => {
-    it("returns expected results based on examples", () => {
+describe('intcode', () => {
+  describe('runProgram', () => {
+    it('returns expected results based on examples', () => {
       expect(runProgram([1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50])).toEqual([
         3500,
         9,
@@ -24,22 +24,12 @@ describe("intcode", () => {
 
       expect(runProgram([2, 4, 4, 5, 99, 0])).toEqual([2, 4, 4, 5, 99, 9801]);
 
-      expect(runProgram([1, 1, 1, 4, 99, 5, 6, 0, 99])).toEqual([
-        30,
-        1,
-        1,
-        4,
-        2,
-        5,
-        6,
-        0,
-        99
-      ]);
+      expect(runProgram([1, 1, 1, 4, 99, 5, 6, 0, 99])).toEqual([30, 1, 1, 4, 2, 5, 6, 0, 99]);
     });
   });
 
-  describe("findMatchingInput", () => {
-    it("no good examples, so these are based on working backwards", () => {
+  describe('findMatchingInput', () => {
+    it('no good examples, so these are based on working backwards', () => {
       const program = [1, 9, 10, 3, 2, 3, 11, 0, 99, 30, 40, 50];
       expect(findMatchingInput(1600, program)).toEqual({ noun: 4, verb: 9 });
     });

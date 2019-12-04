@@ -14,17 +14,12 @@ export function runProgram(commands: number[]): number[] {
     }
 
     commands[resultIndex] =
-      command === 1
-        ? commands[firstIndex] + commands[secondIndex]
-        : commands[firstIndex] * commands[secondIndex];
+      command === 1 ? commands[firstIndex] + commands[secondIndex] : commands[firstIndex] * commands[secondIndex];
   }
   return commands;
 }
 
-export function findMatchingInput(
-  desiredResult: number,
-  commands: number[]
-): ProgramMatch {
+export function findMatchingInput(desiredResult: number, commands: number[]): ProgramMatch {
   let noun = 0;
   let verb = 0;
   let completed = false;

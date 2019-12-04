@@ -29,7 +29,7 @@ export class Grid {
 
   public addWire(wire: string): void {
     this.wireNumber++;
-    const steps = wire.split(",");
+    const steps = wire.split(',');
     let currentX = 0;
     let currentY = 0;
     let stepCount = 1;
