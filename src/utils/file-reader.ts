@@ -1,5 +1,5 @@
-import * as fs from "fs";
-import * as readline from "readline";
+import * as fs from 'fs';
+import * as readline from 'readline';
 
 export default class FileReader {
   constructor(private lineProcessor: (str) => void) {}

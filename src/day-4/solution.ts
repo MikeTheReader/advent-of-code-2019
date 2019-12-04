@@ -1,5 +1,5 @@
-import Solution from "../solution-base";
-import { isReallyValidPassword, isValidPassword } from "./password";
+import Solution from '../solution-base';
+import { isReallyValidPassword, isValidPassword } from './password';
 
 export default class DayFourSolution extends Solution {
   public async executeFirstHalf() {

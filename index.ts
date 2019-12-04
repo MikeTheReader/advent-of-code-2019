@@ -9,13 +9,13 @@ commander
   .description('Executes the solution logic for a given day in the advent of code (1-25).')
   .option('--half [half]', 'Which half of the day to excute, "first", "second", or "both"', 'both')
   .action(async (day, options) => {
-    await execute(day, options.half)
+    await execute(day, options.half);
   });
 
 commander.parse(process.argv);
 
-async function execute(day:number, half:string) {
-  console.log('Inside execute', day, half)
+async function execute(day: number, half: string) {
+  console.log('Inside execute', day, half);
   const inputFile = path.join(__dirname, 'inputs', `day_${day}_input.txt`);
 
   const Solution = await import(`./src/day-${day}/solution`);
@@ -33,4 +33,3 @@ async function execute(day:number, half:string) {
     console.log(`\tSecond half: ${chalk.blue(secondHalfResults)}`);
   }
 }
-
