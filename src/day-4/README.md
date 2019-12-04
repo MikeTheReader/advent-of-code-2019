@@ -18,4 +18,10 @@ Pretty straight-forward, only messed up in that I didn't set the previous value 
 
 Part two adds criteria. I'm going to implement it as an additional function to keep the original unit tests and add new ones.
 
+No surprises with this one, went pretty smooth.
+
+## Refactor
+
+A good deal of refactoring was done to break out the functions into consituent parts to have the exported functions be coordinator functions, and the non-exported functions contain the logic of individual criteria.
+
 
