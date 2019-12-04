@@ -4,11 +4,11 @@ export interface Coordinate {
   steps: number;
 }
 
-export interface Column {
+export interface Rows {
   [key: string]: WireStep[];
 }
-export interface Rows {
-  [key: string]: Column;
+export interface Columns {
+  [key: string]: Rows;
 }
 
 export interface WireStep {
@@ -24,7 +24,7 @@ const DIRECTION_MAP = {
 };
 
 export class Grid {
-  public wireGrid: Rows = {};
+  public wireGrid: Columns = {};
   private wireNumber = 0;
 
   public addWire(wire: string): void {
@@ -57,9 +57,9 @@ export class Grid {
   public findIntersections(): Coordinate[] {
     const intersections = [];
     Object.entries(this.wireGrid).forEach(([xLocation, column]) => {
-      Object.entries(column).forEach(([yLocation, xValue]) => {
-        if (xValue.length > 1) {
-          const sumSteps = xValue.map(w => w.step).reduce((a, b) => a + b);
+      Object.entries(column).forEach(([yLocation, value]) => {
+        if (value.length > 1) {
+          const sumSteps = value.map(w => w.step).reduce((a, b) => a + b);
           intersections.push({ x: +xLocation, y: +yLocation, steps: sumSteps });
         }
       });
