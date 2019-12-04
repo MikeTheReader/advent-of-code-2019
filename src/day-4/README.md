@@ -14,4 +14,8 @@ First, we'll start with a function that can determine if a number is a valid pas
 
 Pretty straight-forward, only messed up in that I didn't set the previous value to compare unless it wasn't set at all. Once I fixed that, all was well. Added a couple more unit tests for that.
 
+## Part Two
+
+Part two adds criteria. I'm going to implement it as an additional function to keep the original unit tests and add new ones.
+
 

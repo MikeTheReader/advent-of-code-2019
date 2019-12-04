@@ -35,3 +35,7 @@ export function isValidPassword(candidate: number): boolean {
 
   return incrementingDigits && hasDouble;
 }
+
+export function isReallyValidPassword(candidate: number): boolean {
+  return isValidPassword(candidate);
+}
