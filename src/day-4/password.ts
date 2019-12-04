@@ -5,9 +5,9 @@ interface PreviousValue {
 export function isValidPassword(candidate: number): boolean {
   const digits = getDigits(candidate);
   const isRightLength = digits.length === 6;
-  const incrementingDigits = hasIncrementingDigits(digits);
-  const includesDouble = hasDoubleOrMore(digits);
-  return incrementingDigits && includesDouble && isRightLength;
+  return (
+    isRightLength && hasIncrementingDigits(digits) && hasDoubleOrMore(digits)
+  );
 }
 
 export function isReallyValidPassword(candidate: number): boolean {
@@ -26,14 +26,14 @@ function getDigits(candidate: number) {
 
 function hasDoubleOrMore(digits: number[]) {
   const previous: PreviousValue = {};
-  let hasDouble = false;
-  digits.forEach(dig => {
+  return digits.some(dig => {
+    let hasDouble;
     if (previous.value && previous.value === dig) {
       hasDouble = true;
     }
     previous.value = dig;
+    return hasDouble;
   });
-  return hasDouble;
 }
 
 function hasIncrementingDigits(digits: number[]) {
