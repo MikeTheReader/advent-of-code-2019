@@ -18,7 +18,7 @@ New parameter mode:
 Opcode is now changed to include parameter mode for each parameter:
   Example: 1002
   02 - command
-  0 - paramater mode for first parameter
+  0 - parameter mode for first parameter
   1 = parameter mode for second parameter
   0 = parameter mode for third parameter (leading 0 so will only be set if it's a 1)
 
@@ -51,3 +51,9 @@ Now, I need to add some unit tests for using the opcode in the series of command
 Got that going. Having the other function in place made that pretty quick and painless, other than I had my ternary expression backwards.
 
 Woo hoo! Got the first part. Only trick was that I hadn't implmented immediate mode for opcode 4. Once that was in place, it was zeroes across the board and a diagnostic code.
+
+# Part 2
+
+Part 2 turned out to be pretty easy, especially since this time there was some test data to work with.
+
+The work I did in part 1 also made it a bit easier. Could still use some major refactoring, but I'm considering it a victory for today.

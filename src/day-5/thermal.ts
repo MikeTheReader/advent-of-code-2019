@@ -13,6 +13,10 @@ const commandArguments = {
   2: 3,
   3: 1,
   4: 1,
+  5: 2,
+  6: 2,
+  7: 3,
+  8: 3,
   99: 0
 };
 
@@ -52,6 +56,34 @@ export function runProgram(commands: number[], input?: number[]): ProgramResults
       case 4: {
         const value = command.modes[0] ? args[0] : commands[args[0]];
         output.push(value);
+        break;
+      }
+      case 5: {
+        const firstParam = command.modes[0] ? args[0] : commands[args[0]];
+        const secondParam = command.modes[1] ? args[1] : commands[args[1]];
+        if (firstParam !== 0) {
+          pointer = secondParam;
+        }
+        break;
+      }
+      case 6: {
+        const firstParam = command.modes[0] ? args[0] : commands[args[0]];
+        const secondParam = command.modes[1] ? args[1] : commands[args[1]];
+        if (firstParam === 0) {
+          pointer = secondParam;
+        }
+        break;
+      }
+      case 7: {
+        const firstParam = command.modes[0] ? args[0] : commands[args[0]];
+        const secondParam = command.modes[1] ? args[1] : commands[args[1]];
+        commands[args[2]] = firstParam < secondParam ? 1 : 0;
+        break;
+      }
+      case 8: {
+        const firstParam = command.modes[0] ? args[0] : commands[args[0]];
+        const secondParam = command.modes[1] ? args[1] : commands[args[1]];
+        commands[args[2]] = firstParam === secondParam ? 1 : 0;
         break;
       }
       default:

@@ -29,6 +29,24 @@ describe('thermal', () => {
     it('handles the 3 and 4 opcodes', () => {
       expect(runProgram([3, 0, 4, 0, 99], [1]).output).toEqual([1]);
     });
+    it('handles the 5 and 6 codes in parameter mode', () => {
+      expect(runProgram([3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9], [0]).output).toEqual([0]);
+      expect(runProgram([3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9], [25]).output).toEqual([1]);
+    });
+    it('handles the 5 and 6 codes in immediate mode', () => {
+      expect(runProgram([3, 3, 1105, -1, 9, 1101, 0, 0, 12, 4, 12, 99, 1], [0]).output).toEqual([0]);
+      expect(runProgram([3, 3, 1105, -1, 9, 1101, 0, 0, 12, 4, 12, 99, 1], [234]).output).toEqual([1]);
+    });
+    it('handles the 7 and 8 codes', () => {
+      expect(runProgram([3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8], [8]).output).toEqual([1]);
+      expect(runProgram([3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8], [25]).output).toEqual([0]);
+      expect(runProgram([3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8], [7]).output).toEqual([1]);
+      expect(runProgram([3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8], [9]).output).toEqual([0]);
+      expect(runProgram([3, 3, 1108, -1, 8, 3, 4, 3, 99], [8]).output).toEqual([1]);
+      expect(runProgram([3, 3, 1108, -1, 8, 3, 4, 3, 99], [25]).output).toEqual([0]);
+      expect(runProgram([3, 3, 1107, -1, 8, 3, 4, 3, 99], [7]).output).toEqual([1]);
+      expect(runProgram([3, 3, 1107, -1, 8, 3, 4, 3, 99], [9]).output).toEqual([0]);
+    });
     it('handles a complex set with input and output that are not the same', () => {
       // Take the first input, store it in 0
       // Take the first input, add 105 and store it in 0
