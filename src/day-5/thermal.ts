@@ -18,32 +18,41 @@ const commandArguments = {
 
 export function runProgram(commands: number[], input?: number[]): ProgramResults {
   const output: number[] = [];
-  let command = 0;
+  let command: Command;
   let pointer = 0;
   let inputPointer = 0;
   while (true) {
-    command = commands[pointer++];
-    if (command === 99) {
+    command = parseOpcode(commands[pointer++]);
+
+    if (command.command === 99) {
       break;
     }
     const args: number[] = [];
-    for (let i = 0; i < commandArguments[command]; i++) {
+    for (let i = 0; i < commandArguments[command.command]; i++) {
       args.push(commands[pointer++]);
     }
 
-    switch (command) {
-      case 1:
-        commands[args[2]] = commands[args[0]] + commands[args[1]];
+    switch (command.command) {
+      case 1: {
+        const firstOperand = command.modes[0] ? args[0] : commands[args[0]];
+        const secondOperand = command.modes[1] ? args[1] : commands[args[1]];
+        commands[args[2]] = firstOperand + secondOperand;
         break;
-      case 2:
-        commands[args[2]] = commands[args[0]] * commands[args[1]];
+      }
+      case 2: {
+        const firstOperand = command.modes[0] ? args[0] : commands[args[0]];
+        const secondOperand = command.modes[1] ? args[1] : commands[args[1]];
+        commands[args[2]] = firstOperand * secondOperand;
         break;
-      case 3:
+      }
+      case 3: {
         commands[args[0]] = input[inputPointer++];
         break;
-      case 4:
+      }
+      case 4: {
         output.push(commands[args[0]]);
         break;
+      }
       default:
         break;
     }

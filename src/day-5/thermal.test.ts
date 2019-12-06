@@ -36,6 +36,13 @@ describe('thermal', () => {
       // Stop
       expect(runProgram([3, 0, 1, 0, 9, 0, 4, 0, 99, 105], [100]).output).toEqual([205]);
     });
+    it('handles a complex set with input and output that use opcodes', () => {
+      // Take the first input, store it in 0
+      // Take the first input, add 9 and store it in 0
+      // Output the value in 0
+      // Stop
+      expect(runProgram([3, 0, 1001, 0, 9, 0, 4, 0, 99, 105], [100]).output).toEqual([109]);
+    });
   });
   describe('parseOpcode', () => {
     it('returns the correct data for simple opcodes', () => {
