@@ -38,3 +38,12 @@ We should start with unit tests similar to those used in Day 2 in order to make 
 
 What might be nice is to have something that parses the intcode (whether it's a single digit or the larger digit). That can return the command number, an array of parameter modes, and the number of spaces the command takes up (including the command itself -- so 2 for opcodes 3 and 4, and 4 for opcodes 1 and 2).
 
+## Implementation
+
+Opcode parser took longer than I thought. It might be that I'm brain-tired but removing the last two digits from a number seemed harder than it should have been. But, it works, so I'm going with it for now.
+
+Next part is to add tests and implement the 3 and 4 commands.
+
+Okay, that wasn't too tough. Had to move away from incrementing by 4 every time and just doing everything in a while loop until we hit 99. So now I've got the 3 and the 4 working and taking input and giving output.
+
+Now, I need to add some unit tests for using the opcode in the series of commands and then implement that.
