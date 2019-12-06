@@ -50,7 +50,8 @@ export function runProgram(commands: number[], input?: number[]): ProgramResults
         break;
       }
       case 4: {
-        output.push(commands[args[0]]);
+        const value = command.modes[0] ? args[0] : commands[args[0]];
+        output.push(value);
         break;
       }
       default:

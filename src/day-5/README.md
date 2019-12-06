@@ -47,3 +47,7 @@ Next part is to add tests and implement the 3 and 4 commands.
 Okay, that wasn't too tough. Had to move away from incrementing by 4 every time and just doing everything in a while loop until we hit 99. So now I've got the 3 and the 4 working and taking input and giving output.
 
 Now, I need to add some unit tests for using the opcode in the series of commands and then implement that.
+
+Got that going. Having the other function in place made that pretty quick and painless, other than I had my ternary expression backwards.
+
+Woo hoo! Got the first part. Only trick was that I hadn't implmented immediate mode for opcode 4. Once that was in place, it was zeroes across the board and a diagnostic code.
