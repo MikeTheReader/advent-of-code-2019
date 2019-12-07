@@ -20,3 +20,7 @@ Once getAllPermutations was in place, used the example programs as test data for
 
 First had 360 responses to find all permutations, which was wrong, so fixed that.
 
+# Second Half
+
+Loops and loops for feedback.
+

@@ -1,5 +1,9 @@
 import { runProgram } from './intcode';
 
+export function feedback(program: number[]): number {
+  return 0;
+}
+
 export function amplify(program: number[]): number {
   const permutations = getAllPermutations([0, 1, 2, 3, 4]);
   let largestOutput = -1;
