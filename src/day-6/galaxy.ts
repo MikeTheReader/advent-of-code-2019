@@ -40,6 +40,28 @@ export class Galaxy {
   }
 
   public findDistance(nameOne: string, nameTwo: string) {
-    // to come
+    const pathOne = this.getFullPath(nameOne);
+    const pathTwo = this.getFullPath(nameTwo);
+    const commonAncestor = pathOne.find(name => {
+      return pathTwo.indexOf(name) > -1;
+    });
+    const stepsFromOne = pathOne.indexOf(commonAncestor);
+    const stepsFromTwo = pathTwo.indexOf(commonAncestor);
+    return stepsFromOne + stepsFromTwo;
+  }
+
+  public getFullPath(name: string): string[] {
+    const planet = this.planets[name];
+    const steps = [];
+
+    function stepBack(planetStep: Planet) {
+      steps.push(planetStep.name);
+      if (planetStep.orbits) {
+        stepBack(planetStep.orbits);
+      }
+    }
+    stepBack(planet.orbits);
+
+    return steps;
   }
 }

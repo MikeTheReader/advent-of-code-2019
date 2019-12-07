@@ -28,4 +28,12 @@ describe('galaxy', () => {
       expect(galaxy.findDistance('YOU', 'SAN')).toBe(4);
     });
   });
+  describe('getFullPath', () => {
+    it('returns the correct full path for YOU', () => {
+      const galaxy = new Galaxy();
+      const orbits = ['COM)B', 'B)C', 'C)D', 'D)E', 'E)F', 'B)G', 'G)H', 'D)I', 'E)J', 'J)K', 'K)L', 'K)YOU', 'I)SAN'];
+      orbits.forEach(orbit => galaxy.addOrbit(orbit));
+      expect(galaxy.getFullPath('YOU')).toEqual(['K', 'J', 'E', 'D', 'C', 'B', 'COM']);
+    });
+  });
 });
