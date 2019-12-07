@@ -38,4 +38,8 @@ export class Galaxy {
     Object.values(this.planets).forEach(countOrbitRecursive);
     return count;
   }
+
+  public findDistance(nameOne: string, nameTwo: string) {
+    // to come
+  }
 }
