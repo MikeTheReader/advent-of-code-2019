@@ -1,3 +1,7 @@
+export function amplify(program: number[]): number {
+  return 0;
+}
+
 export function getAllPermutations(original: number[]): number[][] {
   const permutations = [];
   function permute(digits: number[], size: number, n: number) {

@@ -14,3 +14,9 @@ We do have some examples programs, so probably good to use those for some test c
 
 The first nice unit to have is to generate and array full of all possible permutations of the numbers. Then, we can use that.
 
+Once getAllPermutations was in place, used the example programs as test data for the amplify function.
+
+## Implementation
+
+First had 360 responses to find all permutations, which was wrong, so fixed that.
+
