@@ -24,3 +24,9 @@ First had 360 responses to find all permutations, which was wrong, so fixed that
 
 Loops and loops for feedback.
 
+Okay, so it took me a bit becuase I didn't fully understand the problem, and once I did I thought I needed some kind of intricate threading logic and spent some time trying to do that.
+
+Then I realized since the programs are "pure" rather than stopping the programs after they got an output, I could just keep track of the individual inputs per iteration and feed them back into the amplifier when it came up.
+
+That got me the answer, but for some reason, the tests hang, so I need to figure that out.
+

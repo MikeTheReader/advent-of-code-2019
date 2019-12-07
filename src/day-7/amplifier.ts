@@ -1,11 +1,59 @@
 import { runProgram } from './intcode';
 
 export function feedback(program: number[]): number {
-  return 0;
+  const phaseInputs = [5, 6, 7, 8, 9];
+  const permutations = getAllPermutations(phaseInputs);
+  let largestOutput = -1;
+  permutations.forEach(phases => {
+    let currentOutput = 0;
+    let iteration = 0;
+    const aInputs = [phases[0], 0];
+    const bInputs = [phases[1]];
+    const cInputs = [phases[2]];
+    const dInputs = [phases[3]];
+    const eInputs = [phases[4]];
+    while (true) {
+      const aProgramResults = runProgram(program, aInputs);
+      if (aProgramResults.output.length < iteration + 1) {
+        break;
+      }
+      bInputs.push(aProgramResults.output[iteration]);
+      const bProgramResults = runProgram(program, bInputs);
+      if (bProgramResults.output.length < iteration + 1) {
+        break;
+      }
+      cInputs.push(bProgramResults.output[iteration]);
+      const cProgramResults = runProgram(program, cInputs);
+      if (cProgramResults.output.length < iteration + 1) {
+        break;
+      }
+      dInputs.push(cProgramResults.output[iteration]);
+      const dProgramResults = runProgram(program, dInputs);
+      if (dProgramResults.output.length < iteration + 1) {
+        break;
+      }
+      eInputs.push(dProgramResults.output[iteration]);
+      const eProgramResults = runProgram(program, eInputs);
+      if (eProgramResults.output.length < iteration + 1) {
+        break;
+      }
+      aInputs.push(eProgramResults.output[iteration]);
+      currentOutput = eProgramResults.output[iteration];
+      iteration++;
+    }
+
+    largestOutput = Math.max(largestOutput, currentOutput);
+  });
+
+  return largestOutput;
 }
 
 export function amplify(program: number[]): number {
-  const permutations = getAllPermutations([0, 1, 2, 3, 4]);
+  return sendThroughAmplifiers(program, [0, 1, 2, 3, 4]);
+}
+
+function sendThroughAmplifiers(program: number[], phaseInputs: number[]): number {
+  const permutations = getAllPermutations(phaseInputs);
   let largestOutput = -1;
   permutations.forEach(phases => {
     const aProgramResults = runProgram(program, [phases[0], 0]);
