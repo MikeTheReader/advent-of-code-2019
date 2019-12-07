@@ -7,38 +7,22 @@ export function feedback(program: number[]): number {
   permutations.forEach(phases => {
     let currentOutput = 0;
     let iteration = 0;
-    const aInputs = [phases[0], 0];
-    const bInputs = [phases[1]];
-    const cInputs = [phases[2]];
-    const dInputs = [phases[3]];
-    const eInputs = [phases[4]];
-    while (true) {
-      const aProgramResults = runProgram(program, aInputs);
-      if (aProgramResults.output.length < iteration + 1) {
-        break;
+    const amplifierInputs = [[phases[0], 0], [phases[1]], [phases[2]], [phases[3]], [phases[4]]];
+    let done = false;
+    let amplifierResults;
+    while (!done) {
+      for (let amp = 0; amp < amplifierInputs.length; amp++) {
+        amplifierResults = runProgram(program, amplifierInputs[amp]);
+        if (amplifierResults.output.length < iteration + 1) {
+          done = true;
+          break;
+        }
+        const nextAmp = amp + 1 === amplifierInputs.length ? 0 : amp + 1;
+        amplifierInputs[nextAmp].push(amplifierResults.output[iteration]);
       }
-      bInputs.push(aProgramResults.output[iteration]);
-      const bProgramResults = runProgram(program, bInputs);
-      if (bProgramResults.output.length < iteration + 1) {
-        break;
-      }
-      cInputs.push(bProgramResults.output[iteration]);
-      const cProgramResults = runProgram(program, cInputs);
-      if (cProgramResults.output.length < iteration + 1) {
-        break;
-      }
-      dInputs.push(cProgramResults.output[iteration]);
-      const dProgramResults = runProgram(program, dInputs);
-      if (dProgramResults.output.length < iteration + 1) {
-        break;
-      }
-      eInputs.push(dProgramResults.output[iteration]);
-      const eProgramResults = runProgram(program, eInputs);
-      if (eProgramResults.output.length < iteration + 1) {
-        break;
-      }
-      aInputs.push(eProgramResults.output[iteration]);
-      currentOutput = eProgramResults.output[iteration];
+      // The last input of the first amplifier will always be
+      // the most recent value from the last amplifier
+      currentOutput = amplifierInputs[0][amplifierInputs[0].length - 1];
       iteration++;
     }
 
