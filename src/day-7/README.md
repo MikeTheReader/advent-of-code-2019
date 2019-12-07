@@ -30,3 +30,6 @@ Then I realized since the programs are "pure" rather than stopping the programs 
 
 That got me the answer, but for some reason, the tests hang, so I need to figure that out.
 
+Turns out I was "sharing the memory between programs". Made a slight modification to the intcode to fix that and all was well.
+
+Could do some refactoring as there is a good amount of repeated code.

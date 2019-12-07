@@ -20,7 +20,8 @@ const commandArguments = {
   99: 0
 };
 
-export function runProgram(commands: number[], input?: number[]): ProgramResults {
+export function runProgram(originalCommands: number[], input?: number[]): ProgramResults {
+  const commands = originalCommands.slice();
   const output: number[] = [];
   let command: Command;
   let pointer = 0;

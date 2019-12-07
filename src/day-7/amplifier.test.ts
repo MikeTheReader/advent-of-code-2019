@@ -83,7 +83,7 @@ describe('amplifier', () => {
       expect(amplify(program3)).toBe(65210);
     });
   });
-  describe.only('feedback', () => {
+  describe('feedback', () => {
     it('gets correct results based on examples', () => {
       expect(
         feedback([
