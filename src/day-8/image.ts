@@ -35,5 +35,13 @@ export function breakUpLayers({ height, width }: ImageSize, image: string): numb
 }
 
 export function checksum(layers: NumberCount[]): number {
-  return 0;
+  let fewestZeroLayer: NumberCount = null;
+  let fewestZeros = Infinity;
+  layers.forEach(layer => {
+    if (layer[0] < fewestZeros) {
+      fewestZeros = layer[0];
+      fewestZeroLayer = layer;
+    }
+  });
+  return fewestZeroLayer[1] * fewestZeroLayer[2];
 }
