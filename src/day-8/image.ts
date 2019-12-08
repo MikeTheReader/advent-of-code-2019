@@ -45,3 +45,7 @@ export function checksum(layers: NumberCount[]): number {
   });
   return fewestZeroLayer[1] * fewestZeroLayer[2];
 }
+
+export function mergeLayers(layers: number[][]): string {
+  return null;
+}

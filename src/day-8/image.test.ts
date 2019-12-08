@@ -1,4 +1,4 @@
-import { breakUpLayers, checksum, countOccurences } from './image';
+import { breakUpLayers, checksum, countOccurences, mergeLayers } from './image';
 
 describe('image', () => {
   describe('countOccurences', () => {
@@ -65,5 +65,12 @@ describe('image', () => {
       }
     ];
     expect(checksum(layers)).toBe(50);
+  });
+  describe('mergeLayers', () => {
+    it('returns correct results based on example data', () => {
+      const data = '0222112222120000';
+      const layers = breakUpLayers({ height: 3, width: 2 }, data);
+      expect(mergeLayers(layers)).toEqual('0110');
+    });
   });
 });

@@ -19,3 +19,15 @@ Last bit is calculating the checksum, so unit test for checksum.
 ## Implementation
 
 Pretty quick countOccurences.
+
+# Part 2
+
+Again, it's looking like for most of it we don't really need the tight squares represented in the problem description. Lines of numbers will still have the same relative position. We just need to do something at the end so we can read the message (a nice twist to the end of the puzzle).
+
+So the first thing is to take a set of layers and create a further visual layer from those (having only 1s and 2s).
+
+We can then break that layer up by width and display it.
+
+## Unit tests
+
+So a mergeLayers is what we need now, so unit tests for that from the example data.
