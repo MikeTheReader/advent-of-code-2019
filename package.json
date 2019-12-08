@@ -16,7 +16,7 @@
     "lint": "tslint --fix -c tslint.json -p .",
     "prettier": "prettier --write \"./**/*.ts\" \"*.json\"",
     "tdd": "jest --watch",
-    "test": "jest --coverage",
+    "test": "jest",
     "watch": "yarn clean; tsc -p . -w",
     "execute": "ts-node index.ts execute"
   },
