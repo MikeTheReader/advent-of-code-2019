@@ -14,6 +14,8 @@ Created unit tests for countOccurences.
 
 Create unit tests for breakUpLayers, based on example data.
 
+Last bit is calculating the checksum, so unit test for checksum.
+
 ## Implementation
 
 Pretty quick countOccurences.

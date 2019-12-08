@@ -33,3 +33,7 @@ export function breakUpLayers({ height, width }: ImageSize, image: string): numb
   }
   return layers;
 }
+
+export function checksum(layers: NumberCount[]): number {
+  return 0;
+}

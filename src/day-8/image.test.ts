@@ -1,4 +1,4 @@
-import { breakUpLayers, countOccurences } from './image';
+import { breakUpLayers, checksum, countOccurences } from './image';
 
 describe('image', () => {
   describe('countOccurences', () => {
@@ -36,5 +36,34 @@ describe('image', () => {
         [7, 8, 9, 0, 1, 2]
       ]);
     });
+  });
+  describe('checksum', () => {
+    const layers = [
+      {
+        0: 10,
+        1: 1,
+        2: 1,
+        3: 1,
+        4: 1,
+        5: 0,
+        6: 0,
+        7: 0,
+        8: 0,
+        9: 0
+      },
+      {
+        0: 3,
+        1: 10,
+        2: 5,
+        3: 1,
+        4: 1,
+        5: 0,
+        6: 0,
+        7: 0,
+        8: 0,
+        9: 0
+      }
+    ];
+    expect(checksum(layers)).toBe(50);
   });
 });
