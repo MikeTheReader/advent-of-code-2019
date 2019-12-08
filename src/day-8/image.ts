@@ -59,5 +59,14 @@ export function mergeLayers(layers: number[][]): string {
 }
 
 export function displayImage(size: ImageSize, image: string) {
-  return '';
+  let finalString = '';
+  const imageArray = image.split('');
+  imageArray.forEach((pixel, index) => {
+    if (index % size.width === 0 && index !== 0) {
+      finalString += '\n';
+    }
+    finalString += pixel;
+  });
+
+  return finalString;
 }
