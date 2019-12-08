@@ -12,6 +12,8 @@ We will need to count occurences, so that's the first function I'll tackle.
 
 Created unit tests for countOccurences.
 
+Create unit tests for breakUpLayers, based on example data.
+
 ## Implementation
 
 Pretty quick countOccurences.

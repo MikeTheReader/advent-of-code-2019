@@ -1,4 +1,4 @@
-import { countOccurences } from './image';
+import { breakUpLayers, countOccurences } from './image';
 
 describe('image', () => {
   describe('countOccurences', () => {
@@ -27,6 +27,14 @@ describe('image', () => {
         8: 0,
         9: 0
       });
+    });
+  });
+  describe('breakUpLayers', () => {
+    it('returns correct layers based on example data', () => {
+      expect(breakUpLayers({ width: 3, height: 2 }, '123456789012')).toEqual([
+        [1, 2, 3, 4, 5, 6],
+        [7, 8, 9, 0, 1, 2]
+      ]);
     });
   });
 });
