@@ -75,7 +75,7 @@ describe('image', () => {
   });
   describe('displayImage', () => {
     it('displays correctly based on example data', () => {
-      expect(displayImage({ height: 2, width: 2 }, '0110')).toEqual('01\n10');
+      expect(displayImage({ height: 2, width: 2 }, '0110')).toEqual(' 1\n1 ');
     });
   });
 });

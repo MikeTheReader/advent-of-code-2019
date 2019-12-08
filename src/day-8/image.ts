@@ -65,7 +65,7 @@ export function displayImage(size: ImageSize, image: string) {
     if (index % size.width === 0 && index !== 0) {
       finalString += '\n';
     }
-    finalString += pixel;
+    finalString += pixel === '0' ? ' ' : pixel;
   });
 
   return finalString;
