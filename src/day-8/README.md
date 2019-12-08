@@ -33,3 +33,7 @@ We can then break that layer up by width and display it.
 So a mergeLayers is what we need now, so unit tests for that from the example data.
 
 Last bit is to display the image (the only place that needs to split things by width).
+
+## Implementation
+
+No big surprises on implementation, though changing to only display the 1s made it much easier to read the final image.
