@@ -23,5 +23,13 @@ export function countOccurences(numbers: number[]): NumberCount {
 }
 
 export function breakUpLayers({ height, width }: ImageSize, image: string): number[][] {
-  return null;
+  const imageNumbers = image.split('').map(x => +x);
+  const numberPerLayer = height * width;
+  const layers = [];
+  let index = 0;
+  while (imageNumbers.length >= numberPerLayer) {
+    layers[index] = imageNumbers.splice(0, numberPerLayer);
+    index++;
+  }
+  return layers;
 }
