@@ -57,3 +57,7 @@ export function mergeLayers(layers: number[][]): string {
   });
   return finalLayerArray.join('');
 }
+
+export function displayImage(size: ImageSize, image: string) {
+  return '';
+}
