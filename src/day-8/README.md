@@ -11,3 +11,7 @@ We will need to count occurences, so that's the first function I'll tackle.
 ## Unit tests
 
 Created unit tests for countOccurences.
+
+## Implementation
+
+Pretty quick countOccurences.
