@@ -47,5 +47,13 @@ export function checksum(layers: NumberCount[]): number {
 }
 
 export function mergeLayers(layers: number[][]): string {
-  return null;
+  const finalLayerArray: number[] = [];
+  layers.forEach(layer => {
+    layer.forEach((pixels, index) => {
+      if (pixels !== 2 && finalLayerArray[index] === undefined) {
+        finalLayerArray[index] = pixels;
+      }
+    });
+  });
+  return finalLayerArray.join('');
 }
