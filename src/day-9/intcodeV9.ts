@@ -8,16 +8,36 @@ export interface ProgramResults {
   output: number[];
 }
 
+enum Modes {
+  Position = 0,
+  Immediate = 1,
+  Relative = 2
+}
+
+enum OpCode {
+  Add = 1,
+  Multiply = 2,
+  Input = 3,
+  Output = 4,
+  JumpIfTrue = 5,
+  JumpIfFalse = 6,
+  LessThan = 7,
+  Equals = 8,
+  ChangeRelativeBase = 9,
+  Halt = 99
+}
+
 const commandArguments = {
-  1: 3,
-  2: 3,
-  3: 1,
-  4: 1,
-  5: 2,
-  6: 2,
-  7: 3,
-  8: 3,
-  99: 0
+  [OpCode.Add]: 3,
+  [OpCode.Multiply]: 3,
+  [OpCode.Input]: 1,
+  [OpCode.Output]: 1,
+  [OpCode.JumpIfTrue]: 2,
+  [OpCode.JumpIfFalse]: 2,
+  [OpCode.LessThan]: 3,
+  [OpCode.Equals]: 3,
+  [OpCode.ChangeRelativeBase]: 1,
+  [OpCode.Halt]: 0
 };
 
 export function runProgram(originalCommands: number[], input?: number[]): ProgramResults {
@@ -26,10 +46,11 @@ export function runProgram(originalCommands: number[], input?: number[]): Progra
   let command: Command;
   let pointer = 0;
   let inputPointer = 0;
+  let relativeBase = 0;
   while (true) {
     command = parseOpcode(commands[pointer++]);
 
-    if (command.command === 99) {
+    if (command.command === OpCode.Halt) {
       break;
     }
     const args: number[] = [];
@@ -38,54 +59,63 @@ export function runProgram(originalCommands: number[], input?: number[]): Progra
     }
 
     switch (command.command) {
-      case 1: {
-        const firstOperand = command.modes[0] ? args[0] : commands[args[0]];
-        const secondOperand = command.modes[1] ? args[1] : commands[args[1]];
-        commands[args[2]] = firstOperand + secondOperand;
+      case OpCode.Add: {
+        const firstOperand = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
+        const secondOperand = getValueFromMode(command.modes[1], args[1], commands, relativeBase);
+        const writePosition = getWritePosition(command.modes[2], args[2], relativeBase);
+        commands[writePosition] = firstOperand + secondOperand;
         break;
       }
-      case 2: {
-        const firstOperand = command.modes[0] ? args[0] : commands[args[0]];
-        const secondOperand = command.modes[1] ? args[1] : commands[args[1]];
-        commands[args[2]] = firstOperand * secondOperand;
+      case OpCode.Multiply: {
+        const firstOperand = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
+        const secondOperand = getValueFromMode(command.modes[1], args[1], commands, relativeBase);
+        const writePosition = getWritePosition(command.modes[2], args[2], relativeBase);
+        commands[writePosition] = firstOperand * secondOperand;
         break;
       }
       case 3: {
-        commands[args[0]] = input[inputPointer++];
+        const writePosition = getWritePosition(command.modes[0], args[0], relativeBase);
+        commands[writePosition] = input[inputPointer++];
         break;
       }
-      case 4: {
-        const value = command.modes[0] ? args[0] : commands[args[0]];
+      case OpCode.Output: {
+        const value = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
         output.push(value);
         break;
       }
-      case 5: {
-        const firstParam = command.modes[0] ? args[0] : commands[args[0]];
-        const secondParam = command.modes[1] ? args[1] : commands[args[1]];
+      case OpCode.JumpIfTrue: {
+        const firstParam = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
+        const secondParam = getValueFromMode(command.modes[1], args[1], commands, relativeBase);
         if (firstParam !== 0) {
           pointer = secondParam;
         }
         break;
       }
-      case 6: {
-        const firstParam = command.modes[0] ? args[0] : commands[args[0]];
-        const secondParam = command.modes[1] ? args[1] : commands[args[1]];
+      case OpCode.JumpIfFalse: {
+        const firstParam = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
+        const secondParam = getValueFromMode(command.modes[1], args[1], commands, relativeBase);
         if (firstParam === 0) {
           pointer = secondParam;
         }
         break;
       }
-      case 7: {
-        const firstParam = command.modes[0] ? args[0] : commands[args[0]];
-        const secondParam = command.modes[1] ? args[1] : commands[args[1]];
-        commands[args[2]] = firstParam < secondParam ? 1 : 0;
+      case OpCode.LessThan: {
+        const firstParam = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
+        const secondParam = getValueFromMode(command.modes[1], args[1], commands, relativeBase);
+        const writePosition = getWritePosition(command.modes[2], args[2], relativeBase);
+        commands[writePosition] = firstParam < secondParam ? 1 : 0;
         break;
       }
-      case 8: {
-        const firstParam = command.modes[0] ? args[0] : commands[args[0]];
-        const secondParam = command.modes[1] ? args[1] : commands[args[1]];
-        commands[args[2]] = firstParam === secondParam ? 1 : 0;
+      case OpCode.Equals: {
+        const firstParam = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
+        const secondParam = getValueFromMode(command.modes[1], args[1], commands, relativeBase);
+        const writePosition = getWritePosition(command.modes[2], args[2], relativeBase);
+        commands[writePosition] = firstParam === secondParam ? 1 : 0;
         break;
+      }
+      case OpCode.ChangeRelativeBase: {
+        const alterBaseBy = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
+        relativeBase += alterBaseBy;
       }
       default:
         break;
@@ -93,6 +123,28 @@ export function runProgram(originalCommands: number[], input?: number[]): Progra
   }
 
   return { commands, output };
+}
+
+function getValueFromMode(mode: number, arg: number, commands: number[], relativeBase: number) {
+  if (mode === Modes.Position) {
+    return commands[arg] || 0;
+  }
+  if (mode === Modes.Immediate) {
+    return arg;
+  }
+  if (mode === Modes.Relative) {
+    return commands[relativeBase + arg] || 0;
+  }
+}
+
+function getWritePosition(mode: number, arg: number, relativeBase: number) {
+  if (mode === Modes.Position) {
+    return arg;
+  }
+
+  if (mode === Modes.Relative) {
+    return arg + relativeBase;
+  }
 }
 
 export function parseOpcode(code: number): Command {
