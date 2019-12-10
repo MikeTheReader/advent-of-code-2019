@@ -11,7 +11,7 @@
   "scripts": {
     "build": "yarn clean && tsc -p .",
     "clean": "npx rimraf out coverage",
-    "coverage": "yarn test && open coverage/lcov-report/index.html",
+    "coverage": "yarn test --coverage && open coverage/lcov-report/index.html",
     "format": "yarn prettier && yarn lint",
     "lint": "tslint --fix -c tslint.json -p .",
     "prettier": "prettier --write \"./**/*.ts\" \"*.json\"",
