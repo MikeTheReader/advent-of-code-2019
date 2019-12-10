@@ -40,110 +40,122 @@ const commandArguments = {
   [OpCode.Halt]: 0
 };
 
-export function runProgram(originalCommands: number[], input?: number[]): ProgramResults {
-  const commands = originalCommands.slice();
-  const output: number[] = [];
-  let command: Command;
-  let pointer = 0;
-  let inputPointer = 0;
-  let relativeBase = 0;
-  while (true) {
-    command = parseOpcode(commands[pointer++]);
+export class IntCode {
+  private originalCommands: number[];
+  private commands: number[];
+  private pointer: number;
+  private inputPointer: number;
+  private relativeBase: number;
 
-    if (command.command === OpCode.Halt) {
-      break;
-    }
-    const args: number[] = [];
-    for (let i = 0; i < commandArguments[command.command]; i++) {
-      args.push(commands[pointer++]);
-    }
+  constructor(commands: number[]) {
+    this.originalCommands = commands;
+  }
 
-    switch (command.command) {
-      case OpCode.Add: {
-        const firstOperand = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
-        const secondOperand = getValueFromMode(command.modes[1], args[1], commands, relativeBase);
-        const writePosition = getWritePosition(command.modes[2], args[2], relativeBase);
-        commands[writePosition] = firstOperand + secondOperand;
+  public runProgram(input?: number[]): ProgramResults {
+    this.commands = this.originalCommands.slice();
+    const output: number[] = [];
+    let command: Command;
+    this.pointer = 0;
+    this.inputPointer = 0;
+    this.relativeBase = 0;
+    while (true) {
+      command = parseOpcode(this.commands[this.pointer++]);
+
+      if (command.command === OpCode.Halt) {
         break;
       }
-      case OpCode.Multiply: {
-        const firstOperand = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
-        const secondOperand = getValueFromMode(command.modes[1], args[1], commands, relativeBase);
-        const writePosition = getWritePosition(command.modes[2], args[2], relativeBase);
-        commands[writePosition] = firstOperand * secondOperand;
-        break;
+      const args: number[] = [];
+      for (let i = 0; i < commandArguments[command.command]; i++) {
+        args.push(this.commands[this.pointer++]);
       }
-      case 3: {
-        const writePosition = getWritePosition(command.modes[0], args[0], relativeBase);
-        commands[writePosition] = input[inputPointer++];
-        break;
-      }
-      case OpCode.Output: {
-        const value = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
-        output.push(value);
-        break;
-      }
-      case OpCode.JumpIfTrue: {
-        const firstParam = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
-        const secondParam = getValueFromMode(command.modes[1], args[1], commands, relativeBase);
-        if (firstParam !== 0) {
-          pointer = secondParam;
+
+      switch (command.command) {
+        case OpCode.Add: {
+          const firstOperand = this.getValueFromMode(command.modes[0], args[0]);
+          const secondOperand = this.getValueFromMode(command.modes[1], args[1]);
+          const writePosition = this.getWritePosition(command.modes[2], args[2]);
+          this.commands[writePosition] = firstOperand + secondOperand;
+          break;
         }
-        break;
-      }
-      case OpCode.JumpIfFalse: {
-        const firstParam = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
-        const secondParam = getValueFromMode(command.modes[1], args[1], commands, relativeBase);
-        if (firstParam === 0) {
-          pointer = secondParam;
+        case OpCode.Multiply: {
+          const firstOperand = this.getValueFromMode(command.modes[0], args[0]);
+          const secondOperand = this.getValueFromMode(command.modes[1], args[1]);
+          const writePosition = this.getWritePosition(command.modes[2], args[2]);
+          this.commands[writePosition] = firstOperand * secondOperand;
+          break;
         }
-        break;
+        case 3: {
+          const writePosition = this.getWritePosition(command.modes[0], args[0]);
+          this.commands[writePosition] = input[this.inputPointer++];
+          break;
+        }
+        case OpCode.Output: {
+          const value = this.getValueFromMode(command.modes[0], args[0]);
+          output.push(value);
+          break;
+        }
+        case OpCode.JumpIfTrue: {
+          const firstParam = this.getValueFromMode(command.modes[0], args[0]);
+          const secondParam = this.getValueFromMode(command.modes[1], args[1]);
+          if (firstParam !== 0) {
+            this.pointer = secondParam;
+          }
+          break;
+        }
+        case OpCode.JumpIfFalse: {
+          const firstParam = this.getValueFromMode(command.modes[0], args[0]);
+          const secondParam = this.getValueFromMode(command.modes[1], args[1]);
+          if (firstParam === 0) {
+            this.pointer = secondParam;
+          }
+          break;
+        }
+        case OpCode.LessThan: {
+          const firstParam = this.getValueFromMode(command.modes[0], args[0]);
+          const secondParam = this.getValueFromMode(command.modes[1], args[1]);
+          const writePosition = this.getWritePosition(command.modes[2], args[2]);
+          this.commands[writePosition] = firstParam < secondParam ? 1 : 0;
+          break;
+        }
+        case OpCode.Equals: {
+          const firstParam = this.getValueFromMode(command.modes[0], args[0]);
+          const secondParam = this.getValueFromMode(command.modes[1], args[1]);
+          const writePosition = this.getWritePosition(command.modes[2], args[2]);
+          this.commands[writePosition] = firstParam === secondParam ? 1 : 0;
+          break;
+        }
+        case OpCode.ChangeRelativeBase: {
+          const alterBaseBy = this.getValueFromMode(command.modes[0], args[0]);
+          this.relativeBase += alterBaseBy;
+        }
+        default:
+          break;
       }
-      case OpCode.LessThan: {
-        const firstParam = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
-        const secondParam = getValueFromMode(command.modes[1], args[1], commands, relativeBase);
-        const writePosition = getWritePosition(command.modes[2], args[2], relativeBase);
-        commands[writePosition] = firstParam < secondParam ? 1 : 0;
-        break;
-      }
-      case OpCode.Equals: {
-        const firstParam = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
-        const secondParam = getValueFromMode(command.modes[1], args[1], commands, relativeBase);
-        const writePosition = getWritePosition(command.modes[2], args[2], relativeBase);
-        commands[writePosition] = firstParam === secondParam ? 1 : 0;
-        break;
-      }
-      case OpCode.ChangeRelativeBase: {
-        const alterBaseBy = getValueFromMode(command.modes[0], args[0], commands, relativeBase);
-        relativeBase += alterBaseBy;
-      }
-      default:
-        break;
+    }
+
+    return { commands: this.commands, output };
+  }
+
+  private getValueFromMode(mode: number, arg: number) {
+    if (mode === Modes.Position) {
+      return this.commands[arg] || 0;
+    }
+    if (mode === Modes.Immediate) {
+      return arg;
+    }
+    if (mode === Modes.Relative) {
+      return this.commands[this.relativeBase + arg] || 0;
     }
   }
 
-  return { commands, output };
-}
+  private getWritePosition(mode: number, arg: number) {
+    if (mode === Modes.Position) {
+      return arg;
+    }
 
-function getValueFromMode(mode: number, arg: number, commands: number[], relativeBase: number) {
-  if (mode === Modes.Position) {
-    return commands[arg] || 0;
-  }
-  if (mode === Modes.Immediate) {
-    return arg;
-  }
-  if (mode === Modes.Relative) {
-    return commands[relativeBase + arg] || 0;
-  }
-}
-
-function getWritePosition(mode: number, arg: number, relativeBase: number) {
-  if (mode === Modes.Position) {
-    return arg;
-  }
-
-  if (mode === Modes.Relative) {
-    return arg + relativeBase;
+    if (mode === Modes.Relative) {
+      return arg + this.relativeBase;
+    }
   }
 }
 
