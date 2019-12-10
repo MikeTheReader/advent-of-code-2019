@@ -15,3 +15,11 @@ So slope is going to come into this.
 ## Unit Tests
 
 Unit test data again, this time in the form of a map. Might as well start with ingesting the map into a data structure.
+
+First, unit tests for the `findBestStation` function. There may be sub-functions to that, but for now, we'll start with tests.
+
+## Implementation
+
+Switched to implementing a class with ingestMap as it's constructor and a getCoordinates method. This allowed for an easier way to query the map for x,y coordinates in that order.
+
+Next is to figure out the actual solution to the problem.

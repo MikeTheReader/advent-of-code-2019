@@ -1,3 +1,8 @@
+export interface Coordinate {
+  x: number;
+  y: number;
+}
+
 export class AsteroidMap {
   private grid: string[][];
 
@@ -15,5 +20,9 @@ export class AsteroidMap {
 
   public getCoordinate(x: number, y: number): string {
     return this.grid[y][x];
+  }
+
+  public findBestStation(): Coordinate {
+    return { x: 0, y: 0 };
   }
 }
