@@ -10,4 +10,11 @@ describe('Grid', () => {
       expect(grid.getValue(5, 9)).toBe('.');
     });
   });
+  describe('toString', () => {
+    it('returns a readable string representation of the grid', () => {
+      const grid = new Grid();
+      grid.fill('.', { height: 5, width: 5 });
+      expect(grid.toString()).toEqual('.....\n' + '.....\n' + '.....\n' + '.....\n' + '.....\n');
+    });
+  });
 });
