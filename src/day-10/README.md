@@ -23,3 +23,7 @@ First, unit tests for the `findBestStation` function. There may be sub-functions
 Switched to implementing a class with ingestMap as it's constructor and a getCoordinates method. This allowed for an easier way to query the map for x,y coordinates in that order.
 
 Next is to figure out the actual solution to the problem.
+
+## Implementation - Intermission
+
+So, working through this problem, I've realized that I've created logic around a grid multiple times. I'm going to take a few and implement a good Grid class that allows easy modification and intuitive referencing of the X, Y coordinates. Be back in a bit.
