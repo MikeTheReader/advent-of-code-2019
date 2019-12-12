@@ -3,12 +3,13 @@ export interface Dimensions {
   width: number;
 }
 
+export interface Coordinate {
+  x: number;
+  y: number;
+}
+
 export default class Grid<T> {
   private gridArrays: T[][] = [];
-
-  constructor() {
-    return;
-  }
 
   public fill(value: T, dimensions: Dimensions): void {
     this.gridArrays = [];
@@ -20,20 +21,34 @@ export default class Grid<T> {
     }
   }
 
-  public getValue(x, y): T {
+  public getValue({ x, y }: Coordinate): T {
     return this.gridArrays[y][x];
   }
 
-  public toString(): string {
+  public setValue({ x, y }: Coordinate, value: T) {
+    this.gridArrays[y][x] = value;
+  }
+
+  public processCells(callback: (coord: Coordinate, index: number) => void) {
     const height = this.gridArrays.length;
     const width = this.gridArrays[0].length;
-    let gridStr = '';
+    let index = 0;
     for (let y = 0; y < height; y++) {
       for (let x = 0; x < width; x++) {
-        gridStr += this.getValue(x, y);
+        callback({ x, y }, index++);
       }
-      gridStr += '\n';
     }
+  }
+
+  public toString(): string {
+    const width = this.gridArrays[0].length;
+    let gridStr = '';
+    this.processCells((coord, index) => {
+      gridStr += this.getValue(coord) + ' ';
+      if ((index + 1) % width === 0) {
+        gridStr += '\n';
+      }
+    });
     return gridStr;
   }
 }
