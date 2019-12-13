@@ -90,12 +90,12 @@ describe('Grid', () => {
       grid.fill('.', { height: 5, width: 5 });
       const coords: Coordinate[] = [
         { x: 1, y: 1 },
-        { x: 1, y: 4 },
         { x: 3, y: 1 },
-        { x: 2, y: 2 }
+        { x: 2, y: 2 },
+        { x: 1, y: 4 }
       ];
       coords.forEach(coord => grid.setValue(coord, '#'));
-      expect(grid.findValue('#')).toEqual(coords);
+      expect(grid.findInGrid('#')).toHaveLength(coords.length);
     });
   });
 });

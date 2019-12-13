@@ -40,6 +40,16 @@ export default class Grid<T> {
     this.gridArrays[y][x] = value;
   }
 
+  public findInGrid(value: T): Coordinate[] {
+    const matches: Coordinate[] = [];
+    this.processCells(coord => {
+      if (this.getValue(coord) === value) {
+        matches.push(coord);
+      }
+    });
+    return matches;
+  }
+
   public processCells(callback: (coord: Coordinate, index: number) => void) {
     const height = this.gridArrays.length;
     const width = this.gridArrays[0].length;
