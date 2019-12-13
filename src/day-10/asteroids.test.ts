@@ -89,9 +89,9 @@ describe('asteroids', () => {
 
       describe('findBestStation', () => {
         it('returns correct station location', () => {
-          expect(mapOne.findBestStation()).toEqual({ x: 5, y: 8 });
-          expect(mapTwo.findBestStation()).toEqual({ x: 1, y: 2 });
-          expect(mapThree.findBestStation()).toEqual({ x: 6, y: 3 });
+          expect(mapOne.findBestStation()).toEqual([{ x: 5, y: 8 }, 33]);
+          expect(mapTwo.findBestStation()).toEqual([{ x: 1, y: 2 }, 35]);
+          expect(mapThree.findBestStation()).toEqual([{ x: 6, y: 3 }, 41]);
         });
       });
 

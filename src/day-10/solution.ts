@@ -1,3 +1,12 @@
 import Solution from '../solution-base';
+import { processFile } from '../utils/file-reader';
+import { AsteroidMap } from './asteroids';
 
-export default class DayTenSolution extends Solution {}
+export default class DayTenSolution extends Solution {
+  public async executeFirstHalf() {
+    let mapStr = '';
+    await processFile(this.file, line => (mapStr += line + '\n'));
+    const map = new AsteroidMap(mapStr);
+    return map.findBestStation();
+  }
+}

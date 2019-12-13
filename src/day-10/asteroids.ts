@@ -18,7 +18,7 @@ export class AsteroidMap {
     return this.grid.getValue({ x, y });
   }
 
-  public findBestStation(): Coordinate {
+  public findBestStation(): [Coordinate, number] {
     const stations = this.grid.findInGrid('#');
     let highestCount = 0;
     let highestStation: Coordinate;
@@ -30,7 +30,7 @@ export class AsteroidMap {
         highestStation = station;
       }
     });
-    return highestStation;
+    return [highestStation, highestCount];
   }
 
   public countVisibleStations(station: Coordinate) {
