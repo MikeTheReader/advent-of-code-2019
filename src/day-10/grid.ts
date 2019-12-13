@@ -26,6 +26,9 @@ export default class Grid<T> {
   }
 
   public setValue({ x, y }: Coordinate, value: T) {
+    if (!this.gridArrays[y]) {
+      this.gridArrays[y] = [] as T[];
+    }
     this.gridArrays[y][x] = value;
   }
 
@@ -40,6 +43,40 @@ export default class Grid<T> {
     }
   }
 
+  public processSpiral(center: Coordinate, callback: (coord: Coordinate, index: number) => void) {
+    let radius = 1;
+    let index = 0;
+    const height = this.gridArrays.length;
+    const width = this.gridArrays[0].length;
+    while (radius + center.x < width || radius + center.y < height) {
+      const ranges = this.getRangeForBoxAround(center, radius);
+      let y = ranges.yRange.min;
+      let x = ranges.xRange.min;
+
+      // left
+      for (; x < ranges.xRange.max; x++) {
+        callback({ x, y }, index++);
+      }
+
+      // down
+      for (; y < ranges.yRange.max; y++) {
+        callback({ x, y }, index++);
+      }
+
+      // up
+      for (; x > ranges.xRange.min; x--) {
+        callback({ x, y }, index++);
+      }
+
+      // right
+      for (; y > ranges.yRange.min; y--) {
+        callback({ x, y }, index++);
+      }
+
+      radius++;
+    }
+  }
+
   public toString(): string {
     const width = this.gridArrays[0].length;
     let gridStr = '';
@@ -50,5 +87,13 @@ export default class Grid<T> {
       }
     });
     return gridStr;
+  }
+
+  private getRangeForBoxAround(center: Coordinate, radius: number) {
+    const height = this.gridArrays.length;
+    const width = this.gridArrays[0].length;
+    const xRange = { max: Math.min(center.x + radius, width - 1), min: Math.max(center.x - radius, 0) };
+    const yRange = { max: Math.min(center.y + radius, height - 1), min: Math.max(center.y - radius, 0) };
+    return { xRange, yRange };
   }
 }

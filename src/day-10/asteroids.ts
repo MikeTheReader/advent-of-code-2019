@@ -1,25 +1,21 @@
-export interface Coordinate {
-  x: number;
-  y: number;
-}
+import Grid, { Coordinate } from './grid';
 
 export class AsteroidMap {
-  private grid: string[][];
+  private grid: Grid<string>;
 
   constructor(mapString: string) {
-    this.grid = [];
+    this.grid = new Grid<string>();
     const rows = mapString.split('\n');
     rows.forEach((row, y) => {
-      this.grid[y] = [];
       const columns = row.split('');
-      columns.forEach((column, x) => {
-        this.grid[y][x] = column;
+      columns.forEach((value, x) => {
+        this.grid.setValue({ x, y }, value);
       });
     });
   }
 
   public getCoordinate(x: number, y: number): string {
-    return this.grid[y][x];
+    return this.grid.getValue({ x, y });
   }
 
   public findBestStation(): Coordinate {
