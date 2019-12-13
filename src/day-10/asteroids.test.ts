@@ -90,8 +90,32 @@ describe('asteroids', () => {
       describe('findBestStation', () => {
         it('returns correct station location', () => {
           expect(mapOne.findBestStation()).toEqual({ x: 5, y: 8 });
-          expect(mapTwo.findBestStation()).toEqual({ x: 5, y: 8 });
-          expect(mapThree.findBestStation()).toEqual({ x: 5, y: 8 });
+          expect(mapTwo.findBestStation()).toEqual({ x: 1, y: 2 });
+          expect(mapThree.findBestStation()).toEqual({ x: 6, y: 3 });
+        });
+      });
+
+      describe('findBestStation', () => {
+        it('returns the correct response for sample map', () => {
+          const map =
+            '#.........\n' +
+            '...#......\n' +
+            '...#..#...\n' +
+            '.####....a\n' +
+            '..#.#.#...\n' +
+            '.....#....\n' +
+            '..###.#.##\n' +
+            '.......#..\n' +
+            '....#...#.\n' +
+            '...#..#..#\n';
+          const asteroidMap = new AsteroidMap(map);
+          expect(asteroidMap.countVisibleStations({ x: 0, y: 0 })).toBe(7);
+        });
+        it('returns the correct count for the first test map', () => {
+          expect(mapOne.countVisibleStations({ x: 9, y: 5 })).toBeLessThan(33);
+          expect(mapOne.countVisibleStations({ x: 5, y: 8 })).toBe(33);
+          expect(mapTwo.countVisibleStations({ x: 1, y: 2 })).toBe(35);
+          expect(mapThree.countVisibleStations({ x: 6, y: 3 })).toBe(41);
         });
       });
     });

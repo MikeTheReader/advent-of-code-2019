@@ -30,6 +30,9 @@ export default class Grid<T> {
   }
 
   public getValue({ x, y }: Coordinate): T {
+    if (!this.gridArrays[y]) {
+      return null;
+    }
     return this.gridArrays[y][x];
   }
 
@@ -66,29 +69,42 @@ export default class Grid<T> {
     let index = 0;
     const height = this.gridArrays.length;
     const width = this.gridArrays[0].length;
-    while (radius + center.x < width || radius + center.y < height) {
+    while (
+      center.x - radius > -1 ||
+      radius + center.x < width ||
+      center.y - radius > -1 ||
+      radius + center.y < height
+    ) {
       const ranges = this.getRangeForBoxAround(center, radius);
       let y = ranges.yRange.min;
       let x = ranges.xRange.min;
 
       // left
       for (; x < ranges.xRange.max; x++) {
-        callback({ x, y }, index++);
+        if (!(x === center.x && y === center.y)) {
+          callback({ x, y }, index++);
+        }
       }
 
       // down
       for (; y < ranges.yRange.max; y++) {
-        callback({ x, y }, index++);
+        if (!(x === center.x && y === center.y)) {
+          callback({ x, y }, index++);
+        }
       }
 
       // up
       for (; x > ranges.xRange.min; x--) {
-        callback({ x, y }, index++);
+        if (!(x === center.x && y === center.y)) {
+          callback({ x, y }, index++);
+        }
       }
 
       // right
       for (; y > ranges.yRange.min; y--) {
-        callback({ x, y }, index++);
+        if (!(x === center.x && y === center.y)) {
+          callback({ x, y }, index++);
+        }
       }
 
       radius++;
