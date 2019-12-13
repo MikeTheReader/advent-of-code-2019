@@ -58,4 +58,30 @@ describe('Grid', () => {
       );
     });
   });
+  describe('fromGrid', () => {
+    it('copies an existing grid', () => {
+      const grid = new Grid<string>();
+      grid.fill('.', { height: 5, width: 5 });
+      const gridCopy = Grid.fromGrid(grid);
+      gridCopy.setValue({ x: 2, y: 2 }, '*');
+
+      // prettier-ignore
+      expect(grid.toString()).toEqual(
+        '. . . . . \n' +
+        '. . . . . \n' +
+        '. . . . . \n' +
+        '. . . . . \n' +
+        '. . . . . \n'
+      );
+
+      // prettier-ignore
+      expect(gridCopy.toString()).toEqual(
+        '. . . . . \n' +
+        '. . . . . \n' +
+        '. . * . . \n' +
+        '. . . . . \n' +
+        '. . . . . \n'
+      );
+    });
+  });
 });

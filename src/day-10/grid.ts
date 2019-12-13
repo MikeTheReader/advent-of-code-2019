@@ -9,6 +9,14 @@ export interface Coordinate {
 }
 
 export default class Grid<T> {
+  public static fromGrid(grid: Grid<any>): Grid<any> {
+    const newGrid = new Grid();
+    grid.processCells(coord => {
+      newGrid.setValue(coord, grid.getValue(coord));
+    });
+    return newGrid;
+  }
+
   private gridArrays: T[][] = [];
 
   public fill(value: T, dimensions: Dimensions): void {
