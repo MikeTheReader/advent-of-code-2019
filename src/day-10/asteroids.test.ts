@@ -119,5 +119,26 @@ describe('asteroids', () => {
         });
       });
     });
+    describe('obliterate', () => {
+      it('returns correct order based on small maps in description', () => {
+        const mapStr =
+          '.#....#####...#..\n' +
+          '##...##.#####..##\n' +
+          '##...#...#.#####.\n' +
+          '..#.....#...###..\n' +
+          '..#.#.....#....##\n';
+        const map = new AsteroidMap(mapStr);
+        const asteroidsDestroyed = map.obliterate({ x: 8, y: 3 });
+        expect(asteroidsDestroyed[0]).toEqual({ x: 8, y: 1 });
+        expect(asteroidsDestroyed[1]).toEqual({ x: 9, y: 0 });
+        expect(asteroidsDestroyed[2]).toEqual({ x: 9, y: 1 });
+        expect(asteroidsDestroyed[3]).toEqual({ x: 10, y: 0 });
+        expect(asteroidsDestroyed[4]).toEqual({ x: 9, y: 2 });
+        expect(asteroidsDestroyed[5]).toEqual({ x: 11, y: 1 });
+        expect(asteroidsDestroyed[6]).toEqual({ x: 12, y: 1 });
+        expect(asteroidsDestroyed[6]).toEqual({ x: 11, y: 2 });
+        expect(asteroidsDestroyed[6]).toEqual({ x: 15, y: 1 });
+      });
+    });
   });
 });

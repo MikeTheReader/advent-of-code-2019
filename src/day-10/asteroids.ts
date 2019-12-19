@@ -33,7 +33,37 @@ export class AsteroidMap {
     return [highestStation, highestCount];
   }
 
+  public obliterate(station: Coordinate): Coordinate[] {
+    let count = 0;
+    let previousCount = 0;
+    while (count < 200) {
+      const visible = this.getVisibleStations(station);
+      previousCount = count;
+      const stepCount = this.countMarked(visible);
+      if (stepCount === 0) {
+        break;
+      }
+      count += stepCount;
+      visible.processCells(cell => {
+        if (visible.getValue(cell) === 'X') {
+          this.grid.setValue(cell, '.');
+        }
+      });
+    }
+
+    return [];
+  }
+
   public countVisibleStations(station: Coordinate) {
+    const candidateGrid = this.getVisibleStations(station);
+    return this.countMarked(candidateGrid);
+  }
+
+  private countMarked(grid: Grid<string>): number {
+    return grid.findInGrid('X').length;
+  }
+
+  private getVisibleStations(station: Coordinate): Grid<string> {
     const candidateGrid = Grid.fromGrid(this.grid);
     candidateGrid.processSpiral(station, coord => {
       if (candidateGrid.getValue(coord) === '#') {
@@ -48,7 +78,7 @@ export class AsteroidMap {
         }
       }
     });
-    return candidateGrid.findInGrid('X').length;
+    return candidateGrid;
   }
 
   private getSmallestSlope(coordOne: Coordinate, coordTwo: Coordinate) {

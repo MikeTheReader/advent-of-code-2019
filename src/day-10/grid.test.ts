@@ -98,4 +98,21 @@ describe('Grid', () => {
       expect(grid.findInGrid('#')).toHaveLength(coords.length);
     });
   });
+  describe('processCellsInRadar', () => {
+    it('processes cells in the correct order', () => {
+      const grid = new Grid<number>();
+      grid.fill(-1, { height: 5, width: 5 });
+      grid.processCellsInRadar({ x: 2, y: 2 }, (coord, index) => {
+        grid.setValue(coord, index);
+      });
+      // prettier-ignore
+      expect(grid.toString()).toEqual(
+        '22 23 1 2 4 \n' +
+        '21 20 0 3 5 \n' +
+        '19 18 -1 6 7 \n' +
+        '17 15 12 9 8 \n' +
+        '16 14 13 11 10 \n'
+      );
+    });
+  });
 });
