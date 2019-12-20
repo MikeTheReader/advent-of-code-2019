@@ -65,37 +65,27 @@ export default class Grid<T> {
   }
 
   public processCellsInRadar(center: Coordinate, callback: (coord: Coordinate, index: number) => void) {
-    const height = this.gridArrays.length;
-    const width = this.gridArrays[0].length;
-
-    const slope = { x: 0, y: -1 };
-    let x = center.x;
-    let y = center.y;
-    let xIncrementer = 0;
-    let yIncrementer = -1;
-
-    for (let i = 0; i < height * width - 1; i++) {
-      x = Math.min(Math.max(0, x + slope.x), width);
-      y = Math.min(Math.max(0, y + slope.y), height);
-      callback({ x, y }, i);
-
-      if (x === 0 || x === width - 1 || y === 0 || y === height - 1) {
-        if (x === 0 || x === width - 1) {
-          yIncrementer = xIncrementer;
-          xIncrementer = 0;
-        }
-        if (y === 0 || y === height - 1) {
-          xIncrementer = yIncrementer * -1;
-          yIncrementer = 0;
-        }
-        x = center.x;
-        y = center.y;
-        slope.x += xIncrementer;
-        slope.y += yIncrementer;
+    const anglePoints = [];
+    this.processCells((cell, index) => {
+      if (JSON.stringify(cell) !== JSON.stringify(center)) {
+        const angle = Math.atan2(cell.x - center.x, cell.y - center.y) * (180 / Math.PI);
+        anglePoints.push({ angle, point: cell });
       }
-      x += slope.x;
-      y += slope.y;
-    }
+    });
+
+    anglePoints.sort((a, b) => {
+      if (a.angle !== b.angle) {
+        return b.angle - a.angle;
+      }
+
+      const aDistance = Math.abs(center.x - a.point.x) + Math.abs(center.y - a.point.y);
+      const bDistance = Math.abs(center.x - b.point.x) + Math.abs(center.y - b.point.y);
+      return aDistance - bDistance;
+    });
+
+    anglePoints.forEach(({ angle, point }, index) => {
+      callback(point, index);
+    });
   }
 
   public processSpiral(center: Coordinate, callback: (coord: Coordinate, index: number) => void) {

@@ -14,6 +14,8 @@ export default class DayTenSolution extends Solution {
     let mapStr = '';
     await processFile(this.file, line => (mapStr += line + '\n'));
     const map = new AsteroidMap(mapStr);
-    return map.obliterate({ x: 23, y: 20 });
+    const destroyedAsteroids = map.obliterate({ x: 23, y: 20 });
+    const targetAsteroid = destroyedAsteroids[199];
+    return targetAsteroid.x * 100 + targetAsteroid.y;
   }
 }

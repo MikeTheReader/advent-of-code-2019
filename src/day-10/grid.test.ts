@@ -108,7 +108,7 @@ describe('Grid', () => {
       // prettier-ignore
       expect(grid.toString()).toEqual(
         '22 23 1 2 4 \n' +
-        '21 20 0 3 5 \n' +
+        '20 21 0 3 5 \n' +
         '19 18 -1 6 7 \n' +
         '17 15 12 9 8 \n' +
         '16 14 13 11 10 \n'

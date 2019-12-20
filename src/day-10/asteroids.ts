@@ -34,24 +34,21 @@ export class AsteroidMap {
   }
 
   public obliterate(station: Coordinate): Coordinate[] {
-    let count = 0;
-    let previousCount = 0;
-    while (count < 200) {
+    const destroyedStations: Coordinate[] = [];
+    let atLeastOneDestroyed = true;
+    while (atLeastOneDestroyed) {
+      atLeastOneDestroyed = false;
       const visible = this.getVisibleStations(station);
-      previousCount = count;
-      const stepCount = this.countMarked(visible);
-      if (stepCount === 0) {
-        break;
-      }
-      count += stepCount;
-      visible.processCells(cell => {
+      visible.processCellsInRadar(station, cell => {
         if (visible.getValue(cell) === 'X') {
+          atLeastOneDestroyed = true;
           this.grid.setValue(cell, '.');
+          destroyedStations.push(cell);
         }
       });
     }
 
-    return [];
+    return destroyedStations;
   }
 
   public countVisibleStations(station: Coordinate) {

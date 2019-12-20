@@ -125,7 +125,7 @@ describe('asteroids', () => {
           '.#....#####...#..\n' +
           '##...##.#####..##\n' +
           '##...#...#.#####.\n' +
-          '..#.....#...###..\n' +
+          '..#..........###..\n' +
           '..#.#.....#....##\n';
         const map = new AsteroidMap(mapStr);
         const asteroidsDestroyed = map.obliterate({ x: 8, y: 3 });
@@ -136,8 +136,42 @@ describe('asteroids', () => {
         expect(asteroidsDestroyed[4]).toEqual({ x: 9, y: 2 });
         expect(asteroidsDestroyed[5]).toEqual({ x: 11, y: 1 });
         expect(asteroidsDestroyed[6]).toEqual({ x: 12, y: 1 });
-        expect(asteroidsDestroyed[6]).toEqual({ x: 11, y: 2 });
-        expect(asteroidsDestroyed[6]).toEqual({ x: 15, y: 1 });
+        expect(asteroidsDestroyed[7]).toEqual({ x: 11, y: 2 });
+        expect(asteroidsDestroyed[8]).toEqual({ x: 15, y: 1 });
+      });
+      it('returns correct order based on small maps in description', () => {
+        const mapStr =
+          '.#..##.###...#######\n' +
+          '##.############..##.\n' +
+          '.#.######.########.#\n' +
+          '.###.#######.####.#.\n' +
+          '#####.##.#.##.###.##\n' +
+          '..#####..#.#########\n' +
+          '####################\n' +
+          '#.####....###.#.#.##\n' +
+          '##.#################\n' +
+          '#####.##.###..####..\n' +
+          '..######..##.#######\n' +
+          '####.##.####...##..#\n' +
+          '.#####..#.######.###\n' +
+          '##...#.##########...\n' +
+          '#.##########.#######\n' +
+          '.####.#.###.###.#.##\n' +
+          '....##.##.###..#####\n' +
+          '.#.#.###########.###\n' +
+          '#.#.#.#####.####.###\n' +
+          '###.##.####.##.#..##\n';
+        const map = new AsteroidMap(mapStr);
+        const asteroidsDestroyed = map.obliterate({ x: 11, y: 13 });
+        expect(asteroidsDestroyed[0]).toEqual({ x: 11, y: 12 });
+        expect(asteroidsDestroyed[1]).toEqual({ x: 12, y: 1 });
+        expect(asteroidsDestroyed[2]).toEqual({ x: 12, y: 2 });
+        expect(asteroidsDestroyed[9]).toEqual({ x: 12, y: 8 });
+        expect(asteroidsDestroyed[19]).toEqual({ x: 16, y: 0 });
+        expect(asteroidsDestroyed[49]).toEqual({ x: 16, y: 9 });
+        expect(asteroidsDestroyed[99]).toEqual({ x: 10, y: 16 });
+        expect(asteroidsDestroyed[198]).toEqual({ x: 9, y: 6 });
+        expect(asteroidsDestroyed[199]).toEqual({ x: 8, y: 2 });
       });
     });
   });

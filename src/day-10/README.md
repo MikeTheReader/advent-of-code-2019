@@ -35,3 +35,7 @@ Initial thoughts are determine which stations are visible during each rotation (
 ## Unit tests
 
 Going to start unit tests by using the smaller maps with the incremental steps, since I think that's going tobe the challenge in this one (getting the correct order). Might make sense to just return an array of asteroids in order instead of a count.
+
+## .... Time Passes
+
+Got really good and stuck on this one, so eventually came to a whole different idea. Rather than using slope, I calculated the angle from the center for every point in the grid, then sorted that list based on angle and distance from the center. Iterating through that list then caused things to work. Mission accomplished.
