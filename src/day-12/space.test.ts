@@ -30,13 +30,13 @@ describe('space', () => {
       applyGravity(planetOne, planetTwo);
       expect(planetOne.velocity).toEqual({
         x: 0,
-        y: -1,
-        z: 1
+        y: 1,
+        z: -1
       });
       expect(planetTwo.velocity).toEqual({
         x: 0,
-        y: 1,
-        z: -1
+        y: -1,
+        z: 1
       });
     });
   });
@@ -84,7 +84,7 @@ describe('space', () => {
       const planetStrings = ['<x=-1, y=0, z=2>', '<x=2, y=-10, z=-7>', '<x=4, y=-8, z=8>', '<x=3, y=5, z=-1>'];
       const planets = planetStrings.map(parsePlanet);
       tick(planets);
-      expect(planets[0]).toEqual({ position: { x: 2, y: -1, z: 1 }, velocity: { x: 3, y: -1, z: 1 } });
+      expect(planets[0]).toEqual({ position: { x: 2, y: -1, z: 1 }, velocity: { x: 3, y: -1, z: -1 } });
       expect(planets[1]).toEqual({ position: { x: 3, y: -7, z: -4 }, velocity: { x: 1, y: 3, z: 3 } });
       expect(planets[2]).toEqual({ position: { x: 1, y: -7, z: 5 }, velocity: { x: -3, y: 1, z: -3 } });
       expect(planets[3]).toEqual({ position: { x: 2, y: 2, z: 0 }, velocity: { x: -1, y: -3, z: 1 } });

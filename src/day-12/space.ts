@@ -19,8 +19,8 @@ export function applyGravity(pOne: Planet, pTwo: Planet): void {
     let pTwoModifier = 0;
     if (pOne.position[axis] !== pTwo.position[axis]) {
       const pOneGreater = pOne.position[axis] > pTwo.position[axis];
-      pOneModifier = pOneGreater ? 1 : -1;
-      pTwoModifier = pOneGreater ? -1 : 1;
+      pOneModifier = pOneGreater ? -1 : 1;
+      pTwoModifier = pOneGreater ? 1 : -1;
     }
     pOne.velocity[axis] += pOneModifier;
     pTwo.velocity[axis] += pTwoModifier;
@@ -46,5 +46,11 @@ export function parsePlanet(planetStr: string): Planet {
 }
 
 export function tick(planets: Planet[]): void {
-  // to come
+  for (let i = 0; i < planets.length; i++) {
+    const currentPlanet = planets[i];
+    for (let t = i + 1; t < planets.length; t++) {
+      applyGravity(currentPlanet, planets[t]);
+    }
+  }
+  planets.forEach(applyVelocity);
 }
