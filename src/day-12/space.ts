@@ -25,3 +25,7 @@ export function applyGravity(pOne: Planet, pTwo: Planet): void {
     pTwo.velocity[axis] += pTwoModifier;
   });
 }
+
+export function applyVelocity(planet: Planet): void {
+  // to come
+}

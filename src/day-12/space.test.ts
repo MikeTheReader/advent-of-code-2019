@@ -1,4 +1,4 @@
-import { applyGravity } from './space';
+import { applyGravity, applyVelocity } from './space';
 
 describe('space', () => {
   describe('applyGravity', () => {
@@ -37,6 +37,28 @@ describe('space', () => {
         x: 0,
         y: 1,
         z: -1
+      });
+    });
+  });
+  describe('applyVelocity', () => {
+    it('modifies the planet velocity correctly', () => {
+      const planetOne = {
+        position: {
+          x: 1,
+          y: 2,
+          z: 3
+        },
+        velocity: {
+          x: 0,
+          y: 5,
+          z: -10
+        }
+      };
+      applyVelocity(planetOne);
+      expect(planetOne.position).toEqual({
+        x: 1,
+        y: 7,
+        z: -7
       });
     });
   });
