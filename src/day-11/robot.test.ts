@@ -7,7 +7,11 @@ describe('robot', () => {
         [Color.White, Turn.Left],
         [Color.White, Turn.Right],
         [Color.Black, Turn.Right],
-        [Color.White, Turn.Right]
+        [Color.White, Turn.Right],
+        [Color.White, Turn.Right],
+        [Color.Black, Turn.Right],
+        [Color.White, Turn.Right],
+        [undefined, undefined]
       ];
       const robot = new Robot();
       let index = -1;
@@ -15,7 +19,7 @@ describe('robot', () => {
         index++;
         return mockOutputs[index];
       });
-      expect(index).toBe(5);
+      expect(index).toBe(7);
       expect(robot.getPaintedPanels()).toBe(4);
     });
   });
