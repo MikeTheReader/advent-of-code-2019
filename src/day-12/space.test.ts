@@ -1,4 +1,4 @@
-import { applyGravity, applyVelocity, parsePlanet } from './space';
+import { applyGravity, applyVelocity, parsePlanet, tick } from './space';
 
 describe('space', () => {
   describe('applyGravity', () => {
@@ -77,6 +77,17 @@ describe('space', () => {
           z: 0
         }
       });
+    });
+  });
+  describe('tick', () => {
+    it('moves the planets correctly based on example data', () => {
+      const planetStrings = ['<x=-1, y=0, z=2>', '<x=2, y=-10, z=-7>', '<x=4, y=-8, z=8>', '<x=3, y=5, z=-1>'];
+      const planets = planetStrings.map(parsePlanet);
+      tick(planets);
+      expect(planets[0]).toEqual({ position: { x: 2, y: -1, z: 1 }, velocity: { x: 3, y: -1, z: 1 } });
+      expect(planets[1]).toEqual({ position: { x: 3, y: -7, z: -4 }, velocity: { x: 1, y: 3, z: 3 } });
+      expect(planets[2]).toEqual({ position: { x: 1, y: -7, z: 5 }, velocity: { x: -3, y: 1, z: -3 } });
+      expect(planets[3]).toEqual({ position: { x: 2, y: 2, z: 0 }, velocity: { x: -1, y: -3, z: 1 } });
     });
   });
 });

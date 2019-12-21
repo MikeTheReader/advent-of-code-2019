@@ -34,5 +34,17 @@ export function applyVelocity(planet: Planet): void {
 }
 
 export function parsePlanet(planetStr: string): Planet {
-  return null;
+  const regex = /^<x=(-?\d*), y=(-?\d*), z=(-?\d*)>/;
+  const matches = planetStr.match(regex);
+  const x = +matches[1];
+  const y = +matches[2];
+  const z = +matches[3];
+  return {
+    position: { x, y, z },
+    velocity: { x: 0, y: 0, z: 0 }
+  };
+}
+
+export function tick(planets: Planet[]): void {
+  // to come
 }
