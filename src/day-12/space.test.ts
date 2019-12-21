@@ -1,4 +1,4 @@
-import { applyGravity, applyVelocity, parsePlanet, tick } from './space';
+import { applyGravity, applyVelocity, calculateEnergy, parsePlanet, tick } from './space';
 
 describe('space', () => {
   describe('applyGravity', () => {
@@ -88,6 +88,23 @@ describe('space', () => {
       expect(planets[1]).toEqual({ position: { x: 3, y: -7, z: -4 }, velocity: { x: 1, y: 3, z: 3 } });
       expect(planets[2]).toEqual({ position: { x: 1, y: -7, z: 5 }, velocity: { x: -3, y: 1, z: -3 } });
       expect(planets[3]).toEqual({ position: { x: 2, y: 2, z: 0 }, velocity: { x: -1, y: -3, z: 1 } });
+    });
+  });
+  describe('calculateEnergy', () => {
+    it('returns the correct energy for a planet', () => {
+      const testPlanet = {
+        position: {
+          x: 2,
+          y: 1,
+          z: -3
+        },
+        velocity: {
+          x: -3,
+          y: -2,
+          z: 1
+        }
+      };
+      expect(calculateEnergy(testPlanet)).toBe(36);
     });
   });
 });

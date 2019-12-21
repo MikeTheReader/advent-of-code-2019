@@ -54,3 +54,7 @@ export function tick(planets: Planet[]): void {
   }
   planets.forEach(applyVelocity);
 }
+
+export function calculateEnergy(planet: Planet): number {
+  return 0;
+}
