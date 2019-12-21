@@ -55,6 +55,8 @@ export function tick(planets: Planet[]): void {
   planets.forEach(applyVelocity);
 }
 
-export function calculateEnergy(planet: Planet): number {
-  return 0;
+export function calculateEnergy({ position, velocity }: Planet): number {
+  const potentialEnergy = Math.abs(position.x) + Math.abs(position.y) + Math.abs(position.z);
+  const kineticEnergy = Math.abs(velocity.x) + Math.abs(velocity.y) + Math.abs(velocity.z);
+  return potentialEnergy * kineticEnergy;
 }
