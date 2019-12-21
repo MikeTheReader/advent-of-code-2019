@@ -12,5 +12,16 @@ export interface Planet {
 }
 
 export function applyGravity(pOne: Planet, pTwo: Planet): void {
-  // to come
+  const axes = ['x', 'y', 'z'];
+  axes.forEach(axis => {
+    let pOneModifier = 0;
+    let pTwoModifier = 0;
+    if (pOne.position[axis] !== pTwo.position[axis]) {
+      const pOneGreater = pOne.position[axis] > pTwo.position[axis];
+      pOneModifier = pOneGreater ? 1 : -1;
+      pTwoModifier = pOneGreater ? -1 : 1;
+    }
+    pOne.velocity[axis] += pOneModifier;
+    pTwo.velocity[axis] += pTwoModifier;
+  });
 }
