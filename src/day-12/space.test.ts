@@ -1,4 +1,4 @@
-import { applyGravity, applyVelocity } from './space';
+import { applyGravity, applyVelocity, parsePlanet } from './space';
 
 describe('space', () => {
   describe('applyGravity', () => {
@@ -59,6 +59,23 @@ describe('space', () => {
         x: 1,
         y: 7,
         z: -7
+      });
+    });
+  });
+  describe('parsePlanet', () => {
+    it('returns the correct planet given a string', () => {
+      const planetString = '<x=4, y=-8, z=8>';
+      expect(parsePlanet(planetString)).toEqual({
+        position: {
+          x: 4,
+          y: -8,
+          z: 8
+        },
+        velocity: {
+          x: 0,
+          y: 0,
+          z: 0
+        }
       });
     });
   });

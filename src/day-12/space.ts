@@ -32,3 +32,7 @@ export function applyVelocity(planet: Planet): void {
     planet.position[axis] = planet.position[axis] + planet.velocity[axis];
   });
 }
+
+export function parsePlanet(planetStr: string): Planet {
+  return null;
+}
