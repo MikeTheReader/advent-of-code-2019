@@ -1,4 +1,4 @@
-import Grid from '../utils/grid';
+import Grid, { Dimensions } from '../utils/grid';
 
 export enum Color {
   Black = 0,
@@ -19,14 +19,14 @@ export enum Direction {
 
 export class Robot {
   private grid: Grid<string>;
-  private currentCoordinate = { x: 250, y: 250 };
+  private currentCoordinate = { x: 2, y: 2 };
   private currentDirection = Direction.Up;
   private paintedPanels;
 
-  constructor() {
+  constructor(initialColor: Color = Color.Black, size: Dimensions = { height: 10, width: 50 }) {
     this.grid = new Grid();
-    this.grid.fill('.', { height: 500, width: 500 });
-    this.grid.setValue(this.currentCoordinate, '#');
+    this.grid.fill('.', size);
+    this.grid.setValue(this.currentCoordinate, initialColor === Color.Black ? '.' : '#');
   }
 
   public paint(processor: (currentColor: number) => number[]): void {
@@ -48,8 +48,8 @@ export class Robot {
     return this.paintedPanels.size;
   }
 
-  public getGrid(): Grid<string> {
-    return this.grid;
+  public toString(): string {
+    return this.grid.toString();
   }
 
   private turn(turnDir: Turn): void {
