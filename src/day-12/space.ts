@@ -11,8 +11,9 @@ export interface Planet {
   };
 }
 
+const axes = ['x', 'y', 'z'];
+
 export function applyGravity(pOne: Planet, pTwo: Planet): void {
-  const axes = ['x', 'y', 'z'];
   axes.forEach(axis => {
     let pOneModifier = 0;
     let pTwoModifier = 0;
@@ -27,5 +28,7 @@ export function applyGravity(pOne: Planet, pTwo: Planet): void {
 }
 
 export function applyVelocity(planet: Planet): void {
-  // to come
+  axes.forEach(axis => {
+    planet.position[axis] = planet.position[axis] + planet.velocity[axis];
+  });
 }
