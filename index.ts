@@ -24,12 +24,19 @@ async function execute(day: number, half: string) {
   console.log(`Running day ${chalk.yellow(day)}:`);
 
   if (half === 'both' || half === 'first') {
-    const firstHalfResults = JSON.stringify(await solution.executeFirstHalf(), null, 2);
+    const firstHalfResults = getStringResults(await solution.executeFirstHalf());
     console.log(`\tFirst half: ${chalk.blue(firstHalfResults)}`);
   }
 
   if (half === 'both' || half === 'second') {
-    const secondHalfResults = JSON.stringify(await solution.executeSecondHalf(), null, 2);
+    const secondHalfResults = getStringResults(await solution.executeSecondHalf());
     console.log(`\tSecond half: ${chalk.blue(secondHalfResults)}`);
   }
+}
+
+function getStringResults(results):string {
+  if (typeof results !== 'string') {
+    return JSON.stringify(results, null, 2);
+  }
+  return results;
 }

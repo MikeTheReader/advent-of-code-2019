@@ -1,4 +1,4 @@
-import Grid, { Coordinate } from './grid';
+import Grid, { Coordinate } from '../utils/grid';
 
 export class AsteroidMap {
   private grid: Grid<string>;
