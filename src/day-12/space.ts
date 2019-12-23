@@ -60,3 +60,7 @@ export function calculateEnergy({ position, velocity }: Planet): number {
   const kineticEnergy = Math.abs(velocity.x) + Math.abs(velocity.y) + Math.abs(velocity.z);
   return potentialEnergy * kineticEnergy;
 }
+
+export function findPeriod(planets: Planet[]): number {
+  return 0;
+}

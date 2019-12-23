@@ -1,4 +1,4 @@
-import { applyGravity, applyVelocity, calculateEnergy, parsePlanet, tick } from './space';
+import { applyGravity, applyVelocity, calculateEnergy, findPeriod, parsePlanet, tick } from './space';
 
 describe('space', () => {
   describe('applyGravity', () => {
@@ -105,6 +105,13 @@ describe('space', () => {
         }
       };
       expect(calculateEnergy(testPlanet)).toBe(36);
+    });
+  });
+  describe('findPeriod', () => {
+    it('returns expecte result based on sample data', () => {
+      const planetStrings = ['<x=-8, y=-10, z=0>', '<x=5, y=5, z=10>', '<x=2, y=-7, z=3>', '<x=9, y=-8, z=-3>'];
+      const planets = planetStrings.map(parsePlanet);
+      expect(findPeriod(planets)).toBe(4686774924);
     });
   });
 });
