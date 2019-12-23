@@ -1,6 +1,6 @@
 import Solution from '../solution-base';
 import { processFile } from '../utils/file-reader';
-import { calculateEnergy, parsePlanet, tick } from './space';
+import { calculateEnergy, findPeriod, parsePlanet, tick } from './space';
 
 export default class DayTwelveSolution extends Solution {
   public async executeFirstHalf() {
@@ -12,5 +12,13 @@ export default class DayTwelveSolution extends Solution {
       tick(planets);
     }
     return planets.reduce((sum, planet) => (sum += calculateEnergy(planet)), 0);
+  }
+
+  public async executeSecondHalf() {
+    const planets = [];
+    await processFile(this.file, line => {
+      planets.push(parsePlanet(line));
+    });
+    return findPeriod(planets);
   }
 }
