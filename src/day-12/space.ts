@@ -62,5 +62,54 @@ export function calculateEnergy({ position, velocity }: Planet): number {
 }
 
 export function findPeriod(planets: Planet[]): number {
-  return 0;
+  const xInitialState = getCurrentState(planets, 'x');
+  const yInitialState = getCurrentState(planets, 'y');
+  const zInitialState = getCurrentState(planets, 'z');
+  let xPeriod = 0;
+  let yPeriod = 0;
+  let zPeriod = 0;
+  let i = 0;
+  while (true) {
+    tick(planets);
+    i++;
+    if (!xPeriod && getCurrentState(planets, 'x') === xInitialState) {
+      xPeriod = i;
+    }
+    if (!yPeriod && getCurrentState(planets, 'y') === yInitialState) {
+      yPeriod = i;
+    }
+    if (!zPeriod && getCurrentState(planets, 'z') === zInitialState) {
+      zPeriod = i;
+    }
+    if (xPeriod && yPeriod && zPeriod) {
+      break;
+    }
+  }
+
+  return lcm([xPeriod, yPeriod, zPeriod]);
+}
+
+function getCurrentState(planets: Planet[], axis: string): string {
+  return planets.reduce((str, planet) => {
+    return str + JSON.stringify(planet.position[axis]) + JSON.stringify(planet.velocity[axis]);
+  }, '');
+}
+
+function gcd(a: number, b: number): number {
+  if (!b) {
+    return b === 0 ? a : NaN;
+  }
+  return gcd(b, a % b);
+}
+
+function lcm2(a: number, b: number): number {
+  return (a * b) / gcd(a, b);
+}
+
+function lcm(array: number[]): number {
+  let n = 1;
+  array.forEach(i => {
+    n = lcm2(i, n);
+  });
+  return n;
 }
