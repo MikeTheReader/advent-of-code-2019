@@ -44,19 +44,17 @@ export class IntCode {
   private originalCommands: number[];
   private commands: number[];
   private pointer: number;
-  private inputPointer: number;
   private relativeBase: number;
 
   constructor(commands: number[]) {
     this.originalCommands = commands;
   }
 
-  public runProgram(input?: number[]): ProgramResults {
+  public runProgram(input?: (state: number[]) => number): ProgramResults {
     this.commands = this.originalCommands.slice();
     const output: number[] = [];
     let command: Command;
     this.pointer = 0;
-    this.inputPointer = 0;
     this.relativeBase = 0;
     while (true) {
       command = parseOpcode(this.commands[this.pointer++]);
@@ -86,7 +84,7 @@ export class IntCode {
         }
         case 3: {
           const writePosition = this.getWritePosition(command.modes[0], args[0]);
-          this.commands[writePosition] = input[this.inputPointer++];
+          this.commands[writePosition] = input(output);
           break;
         }
         case OpCode.Output: {
