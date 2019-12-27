@@ -8,21 +8,21 @@ The first part of this is parsing the reactions out to a data structure. The sim
 {
   inputs: [
     {
-      chemical: ORE,
+      chemical: 'ORE',
       quantity: 10
     },
     {
-      chemical: A,
+      chemical: 'A',
       quantity: 5
     }
   ],
   outputs: [
     {
-      chemical: AB,
+      chemical: 'AB',
       quantity: 1
     },
     {
-      chemical: CD,
+      chemical: 'CD',
       quantity: 5
     }
   ]
@@ -38,21 +38,25 @@ Looking again at the same data, there are no reactions that produce multiple out
   FUEL: {
     inputs: [
       {
-        chemical: ORE,
+        chemical: 'ORE',
         quantity: 10
       },
-      chemical: A,
-      quantity: 5
-    ]
+      {
+        chemical: 'A',
+        quantity: 5
+      }
+    ],
+    outputQuantity: 10
   },
   A: {
     inputs: [
       {
-        chemical: ORE,
+        chemical: 'ORE',
         quantity: 5
       }
     ]
+    outputQuantity: 5
   }
 }
 ```
-That way, we're able to quickly index based on the output and work backwards.
+That way, we're able to quickly index based on the output and work backwards. (Updated to inclue output quantity.)
