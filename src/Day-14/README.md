@@ -62,3 +62,7 @@ Looking again at the same data, there are no reactions that produce multiple out
 That way, we're able to quickly index based on the output and work backwards. (Updated to inclue output quantity.)
 
 Started by trying with a regular expression, but got tied up in the variable number of inputs and went back to splitting the string up to parse.
+
+Now that we have the reaction parsed the goal would be to go through and determine how many ORE to make one FUEL.
+
+Once we've parsed everything and put it into a keyed object, we'll easily be able to get FUEL and figure out what we need to make it. For each thing we need to make it, figure out what we need to make that, stepping back in order until we find ORE. Keep the running total.
