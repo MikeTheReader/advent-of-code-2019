@@ -45,10 +45,9 @@ export function parseAllReactions(reactionStrings: string[]): Reaction {
   return reactionMap;
 }
 
-export function calculateOre(reactionStrings: string[]): number {
+export function calculateOre(reactionStrings: string[], currentInventory = {}): number {
   const reactionMap = parseAllReactions(reactionStrings);
   let oreRequired = 0;
-  const currentInventory = {};
   function createComponents(chemical: string, quantity: number) {
     // tslint:disable-next-line: no-console
     // console.debug(`Need ${quantity} - ${chemical}`);
@@ -94,4 +93,9 @@ export function calculateOre(reactionStrings: string[]): number {
   }
   createComponents('FUEL', 1);
   return oreRequired;
+}
+
+export function calculateFuelWithOre(reactionStrings: string[], amountOfOre: number): number {
+  // const currentInventory = {};
+  return 0;
 }
