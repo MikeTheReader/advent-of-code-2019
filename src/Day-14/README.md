@@ -66,3 +66,7 @@ Started by trying with a regular expression, but got tied up in the variable num
 Now that we have the reaction parsed the goal would be to go through and determine how many ORE to make one FUEL.
 
 Once we've parsed everything and put it into a keyed object, we'll easily be able to get FUEL and figure out what we need to make it. For each thing we need to make it, figure out what we need to make that, stepping back in order until we find ORE. Keep the running total.
+
+This one had me a bit stumped on both the first half and second half. When I finally reframed around keeping leftovers the first half became easy. When I reversed the problem and make the first half more efficient, then the second half came in.
+
+The second half involved essentially guessing at how many fuel could be created and then doing a binary chop until we got the right number.
