@@ -1,6 +1,6 @@
 import Solution from '../solution-base';
 import { processFile } from '../utils/file-reader';
-import { calculateOre } from './reactions';
+import { calculateFuelWithOre, calculateOre } from './reactions';
 
 export default class DayFourteenSolution extends Solution {
   public async executeFirstHalf() {
@@ -10,7 +10,8 @@ export default class DayFourteenSolution extends Solution {
   }
 
   public async executeSecondHalf() {
-    const orePerFuel = await this.executeFirstHalf();
-    return Math.ceil(1000000000000 / orePerFuel);
+    const reactionStrings: string[] = [];
+    await processFile(this.file, line => reactionStrings.push(line));
+    return calculateFuelWithOre(reactionStrings, 1000000000000);
   }
 }
