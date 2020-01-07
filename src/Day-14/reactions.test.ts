@@ -133,7 +133,7 @@ describe('reactions', () => {
     it('can handle large numbers of ore', () => {
       expect(calculateOre(fuelSteps[0], 2000000)).toBe(58000000);
     });
-    it.only('calculates correct amount based on first complex example', () => {
+    it('calculates correct amount based on first complex example', () => {
       expect(calculateOre(fuelSteps[1])).toBe(165);
     });
     it('calculates correct amount based on second complex example', () => {

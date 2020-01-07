@@ -55,9 +55,13 @@ export function calculateOre(reactionStrings: string[], fuelQuantity: number = 1
     let outputQuantity = reactionMap[chemical].outputQuantity;
     let multiplier = 1;
     if (outputQuantity < quantity) {
+      debugLog(`Pulling from  stores: ${currentInventory[chemical] || 0}`);
+      quantity -= currentInventory[chemical] || 0;
+      currentInventory[chemical] = 0;
       multiplier = Math.ceil(quantity / outputQuantity);
       debugLog(`Need to multiply reaction by ${multiplier}`);
     }
+    outputQuantity *= multiplier;
     inputs.forEach(input => {
       const inputQuantity = input.quantity * multiplier;
       if (input.chemical === 'ORE') {
@@ -73,7 +77,6 @@ export function calculateOre(reactionStrings: string[], fuelQuantity: number = 1
       }
     });
 
-    outputQuantity *= multiplier;
     debugLog(`Created ${outputQuantity} ${chemical}`);
     if (outputQuantity > quantity) {
       if (!currentInventory[chemical]) {
@@ -82,21 +85,9 @@ export function calculateOre(reactionStrings: string[], fuelQuantity: number = 1
       currentInventory[chemical] += outputQuantity - quantity;
       debugLog(`Current leftovers for ${chemical} = ${currentInventory[chemical]}`);
     }
-    if (outputQuantity < quantity) {
-      let bumpedQuantity = outputQuantity;
-      if (currentInventory[chemical]) {
-        const bumpFromInventory = Math.min(currentInventory[chemical], quantity - outputQuantity);
-        currentInventory[chemical] -= bumpFromInventory;
-        bumpedQuantity += bumpFromInventory;
-        debugLog(`Adding leftovers for ${chemical} = ${bumpFromInventory}`);
-      }
-      if (bumpedQuantity < quantity) {
-        debugLog(`Didn't make enough ${chemical}, making ${quantity - bumpedQuantity} more.`);
-        createComponents(chemical, quantity - bumpedQuantity);
-      }
-    }
   }
   createComponents('FUEL', fuelQuantity);
+  debugLog(`Leftovers: ${JSON.stringify(currentInventory, null, 2)}`);
   return oreRequired;
 }
 
@@ -130,5 +121,5 @@ export function calculateFuelWithOre(reactionStrings: string[], amountOfOre: num
 
 function debugLog(message: string) {
   // tslint:disable-next-line: no-console
-  console.debug(message);
+  // console.debug(message);  // uncomment this line to log messages
 }
