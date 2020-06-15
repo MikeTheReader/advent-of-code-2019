@@ -25,3 +25,5 @@ Each case in the recursive function will find all possible exits from the given 
 # Part Two
 
 So, in this part, we'll want to draw the entire grid -- something like what we did in the early stages of part 1. Draw the grid, once it's complete, then start doing the oxygen propogation thing, and use the grid component to figure out when all the "hallways" are full of oxygen. Mark all the hallways one way as we're drawing the maze. Start the propogation, changing those squares that are adjacent to a different mark. Iterate. Once all the initial marks are changed to the new marks, spit out the number of iterations.
+
+That one worked as expected. Could probably speed it up by using a recursive approach to draw the maze as well, but it works, so I'm good with it.
