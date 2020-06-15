@@ -147,6 +147,14 @@ export default class Grid<T> {
     return gridStr;
   }
 
+  public getGridArrays(): T[][] {
+    return this.gridArrays;
+  }
+
+  public setGridArrays(gridArrays: T[][]) {
+    this.gridArrays = gridArrays;
+  }
+
   private getRangeForBoxAround(center: Coordinate, radius: number) {
     const height = this.gridArrays.length;
     const width = this.gridArrays[0].length;
