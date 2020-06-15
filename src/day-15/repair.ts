@@ -13,7 +13,7 @@ enum StatusCodes {
   MovedOneStep = 1,
   FoundOxygenSystem = 2
 }
-
+/*
 const toTheRight = {
   [MovementCommand.North]: MovementCommand.East,
   [MovementCommand.East]: MovementCommand.South,
@@ -26,6 +26,14 @@ const toTheLeft = {
   [MovementCommand.West]: MovementCommand.South,
   [MovementCommand.South]: MovementCommand.East,
   [MovementCommand.East]: MovementCommand.North
+};
+*/
+
+const oppositeDirection = {
+  [MovementCommand.North]: MovementCommand.South,
+  [MovementCommand.West]: MovementCommand.East,
+  [MovementCommand.South]: MovementCommand.North,
+  [MovementCommand.East]: MovementCommand.West
 };
 
 function getNewLocation(gridLocation: Coordinate, direction: MovementCommand): Coordinate {
@@ -44,10 +52,11 @@ export function findOxygenSteps(processor: IntCode): number {
   const gridSpan = 46;
   const grid = new Grid();
   grid.fill(' ', { height: gridSpan, width: gridSpan });
-  let gridLocation = { x: gridSpan / 2, y: gridSpan / 2 };
-  const startingLocation = gridLocation;
+  const gridLocation = { x: gridSpan / 2, y: gridSpan / 2 };
 
-  const directionsMoved: number[] = [];
+  const smallest = recursiveFind([], gridLocation, MovementCommand.North, processor);
+  return smallest;
+  /*const directionsMoved: number[] = [];
   let currentDirection = MovementCommand.North;
   let iteration = 0;
   directionsMoved.push(currentDirection);
@@ -61,7 +70,7 @@ export function findOxygenSteps(processor: IntCode): number {
       console.clear();
       console.log(grid.toString());
       // tslint:enable
-      grid.setValue(gridLocation, '.');
+      grid.setValue(gridLocation, ' ');
     }
     const output = processor.runProgram(directionsMoved).output[iteration];
     if (output === StatusCodes.HitAWall) {
@@ -83,5 +92,47 @@ export function findOxygenSteps(processor: IntCode): number {
     iteration++;
   }
 
-  return iteration;
+  return iteration;*/
+}
+
+function recursiveFind(previousCommands, gridLocation, currentDirection, processor) {
+  const allExits: MovementCommand[] = findAllExits(previousCommands, processor);
+  const viableExits = allExits.filter(direction => direction !== oppositeDirection[currentDirection]);
+  if (!viableExits.length) {
+    return Infinity; // Dead end
+  }
+  let foundIt = false;
+  viableExits.forEach(direction => {
+    const newCommands = previousCommands.slice();
+    newCommands.push(direction);
+    const directionResult = processor.runProgram(newCommands).output[newCommands.length - 1];
+    if (directionResult === StatusCodes.FoundOxygenSystem) {
+      foundIt = true;
+    }
+  });
+  if (foundIt) {
+    return previousCommands.length + 1;
+  }
+  const numStepsToGoal = viableExits.map(direction => {
+    const newCommands = previousCommands.slice();
+    newCommands.push(direction);
+    const newGridLocation = getNewLocation(gridLocation, direction);
+    return recursiveFind(newCommands, newGridLocation, direction, processor);
+  });
+
+  const positiveSteps = numStepsToGoal.filter(steps => steps > -1);
+  return Math.min(...positiveSteps);
+}
+
+function findAllExits(previousCommands, processor): MovementCommand[] {
+  const exits = [];
+  [MovementCommand.North, MovementCommand.South, MovementCommand.East, MovementCommand.West].forEach(command => {
+    const newCommands = previousCommands.slice();
+    newCommands.push(command);
+    const directionResult = processor.runProgram(newCommands).output[newCommands.length - 1];
+    if (directionResult !== StatusCodes.HitAWall) {
+      exits.push(command);
+    }
+  });
+  return exits;
 }
