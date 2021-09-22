@@ -1,6 +1,6 @@
 import Solution from '../solution-base';
 import { processFile } from '../utils/file-reader';
-import { processSignal } from './transmission';
+import { processFullSignal, processSignal } from './transmission';
 
 export default class DayFifteenSolution extends Solution {
   public async executeFirstHalf() {
@@ -10,6 +10,8 @@ export default class DayFifteenSolution extends Solution {
   }
 
   public async executeSecondHalf() {
-    return 'not implemented';
+    let signal;
+    await processFile(this.file, line => (signal = line));
+    return processFullSignal(signal);
   }
 }

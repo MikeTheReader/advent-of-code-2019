@@ -93,7 +93,7 @@ function getNewLocation(gridLocation: Coordinate, direction: MovementCommand): C
   }
 }
 
-export function drawWholeGrid(processor: IntCode, display: boolean = false): Grid<string> {
+export function drawWholeGrid(processor: IntCode, display: boolean = true): Grid<string> {
   const gridSpan = 46;
   const grid = new Grid<string>();
   grid.fill(' ', { height: gridSpan, width: gridSpan });
